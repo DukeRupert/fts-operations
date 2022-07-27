@@ -6,6 +6,12 @@
 	import SubClassPicker from '$lib/components/SubClassPicker.svelte';
 	import RacePicker from '$lib/components/RacePicker.svelte';
 	import BackgroundPicker from '$lib/components/BackgroundPicker.svelte';
+	import StrengthPicker from '$lib/components/StrengthPicker.svelte';
+	import DexterityPicker from '$lib/components/DexterityPicker.svelte';
+	import ConstitutionPicker from '$lib/components/ConstitutionPicker.svelte';
+	import IntelligencePicker from '$lib/components/IntelligencePicker.svelte';
+	import WisdomPicker from '$lib/components/WisdomPicker.svelte';
+	import CharismaPicker from '$lib/components/CharismaPicker.svelte';
 
 	function handleClick(e: MouseEvent<HTMLButtonElement>) {
 		console.log(e.srcElement.id);
@@ -21,17 +27,13 @@
 	</div>
 	<div class="flex flex-col gap-y-4 px-4 py-8">
 		<h2>Ability Points {$allocatedPoints} / {$abilityPoints}</h2>
-		<div class="flex flex-col w-full border-opacity-50">
-			<div class="grid h-20 card card-side bg-base-300 rounded-box place-items-center">
-				<div class="flex items-center gap-x-4">
-					<div>Strength</div>
-					<div>17</div>
-					<button id="strength" on:click={handleClick} class="btn btn-circle text-lg"> + </button>
-					<button id="strength" class="btn btn-circle btn-outline text-lg"> - </button>
-				</div>
-			</div>
-			<div class="divider">OR</div>
-			<div class="grid h-20 card bg-base-300 rounded-box place-items-center">content</div>
+		<div class="flex flex-col w-1/2 gap-y-6 border-opacity-50">
+			<StrengthPicker />
+			<DexterityPicker />
+			<ConstitutionPicker />
+			<IntelligencePicker />
+			<WisdomPicker />
+			<CharismaPicker />
 		</div>
 	</div>
 </div>

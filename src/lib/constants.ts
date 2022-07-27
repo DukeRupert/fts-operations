@@ -122,13 +122,13 @@ export type Proficiency =
 	| 'stealth'
 	| 'survival';
 
-export interface Background {
+export interface BackgroundDetails {
 	title: string;
 	description: string;
 	proficiencies: Proficiency[];
 }
 
-export const BackgroundDetails: Record<Backgrounds, Background> = {
+export const BackgroundDetails: Record<Background, BackgroundDetails> = {
 	accolyte: {
 		title: 'accolyte',
 		description:
@@ -208,3 +208,12 @@ export const BackgroundDetails: Record<Backgrounds, Background> = {
 		proficiencies: ['sleight of hand', 'stealth']
 	}
 };
+
+export interface Effect {
+	id: number;
+	modifier: number;
+	description: string;
+}
+
+export const BASE_ABILITY_SCORE = 8;
+export const MAX_BASE_ABILITY_SCORE = 15;

@@ -5,7 +5,7 @@
 		maxAbilityPointAllocation,
 		allocatedPoints,
 		abilityPoints
-	} from '$lib/stores';
+	} from '$lib/stores/character';
 	import { BASE_ABILITY_SCORE } from '$lib/constants';
 
 	// @ts-ignore

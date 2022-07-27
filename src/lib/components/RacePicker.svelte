@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { race } from '$lib/stores';
+	import { race } from '$lib/stores/character';
 	import type { Race } from '$lib/constants';
 	import { RaceOptions } from '$lib/constants';
 

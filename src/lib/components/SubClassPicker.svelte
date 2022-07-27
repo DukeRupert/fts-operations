@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { primaryClass, subClass } from '$lib/stores';
+	import { primaryClass, subClass } from '$lib/stores/character';
 	import { SubClassOptions } from '$lib/constants';
 
 	// @ts-ignore

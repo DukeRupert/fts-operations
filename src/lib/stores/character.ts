@@ -6,7 +6,7 @@ import {
 	type Effect,
 	BASE_ABILITY_SCORE,
 	MAX_BASE_ABILITY_SCORE
-} from './constants';
+} from '$lib/constants';
 
 export const primaryClass: Writable<PrimaryClasses> = writable('fighter');
 

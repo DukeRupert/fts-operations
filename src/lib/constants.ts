@@ -45,30 +45,67 @@ export const SubClassOptions: Record<PrimaryClasses, SubClass[]> = {
 
 export enum RACE {
 	HUMAN = 'human',
-	ELF = 'elf',
-	DWARF = 'dwarf',
-	HALF_ELF = 'half-elf',
-	HALFLING = 'halfling',
-	TIEFLING = 'tiefling',
-	DROW = 'drow',
-	HALF_DROW = 'half-drow',
-	GITHYANKI = 'githyanki',
-	VAMPIRE = 'vampire spawn'
+	HIGH_ELF = 'high elf',
+	WOOD_ELF = 'wood elf',
+	HIGH_HALF_ELF = 'high half-elf',
+	WOOD_HALF_ELF = 'wood half-elf',
+	LOLTH_DROW = 'lolth-sworn drow',
+	SELDARINE_DROW = 'seldarine drow',
+	DROW_HALF_ELF = 'drow half-elf',
+	LIGHTFOOT = 'lightfoot halfling',
+	STRONGHEART = 'strongheart halfling',
+	GOLD_DWARF = 'gold dwarf',
+	SHIELD_DWARF = 'shield dwarf',
+	DEEP_GNOME = 'deep gnome',
+	FOREST_GNOME = 'forest gnome',
+	ROCK_GNOME = 'rock gnome',
+	ASMODEUS = 'asmodeus tiefling',
+	MEPHISTOPHELES = 'mephistopheles tiefling',
+	ZARIEL = 'zariel tiefling',
+	GITHYANKI = 'githyanki'
 }
 
 export type Race =
 	| 'human'
-	| 'elf'
-	| 'half-elf'
-	| 'halfling'
-	| 'dwarf'
-	| 'tiefling'
-	| 'drow'
-	| 'half-drow'
-	| 'githyanki'
-	| 'vampire';
+	| 'high elf'
+	| 'wood elf'
+	| 'high half-elf'
+	| 'wood half-elf'
+	| 'lolth-sworn drow'
+	| 'seldarine drow'
+	| 'drow half-elf'
+	| 'lightfoot halfling'
+	| 'strongheart halfling'
+	| 'gold dwarf'
+	| 'shield dwarf'
+	| 'deep gnome'
+	| 'forest gnome'
+	| 'rock gnome'
+	| 'asmodeus tiefling'
+	| 'mephistopheles tiefling'
+	| 'zariel tiefling'
+	| 'githyanki';
 
 export const RaceOptions = Object.values(RACE);
+
+export enum ABILITY {
+	STRENGTH = 'strength',
+	DEXTERITY = 'dexterity',
+	CONSTITUTION = 'constitution',
+	INTELLIGENCE = 'intelligence',
+	WISDOM = 'wisdom',
+	CHARISMA = 'charisma'
+}
+
+export type Ability =
+	| 'strength'
+	| 'dexterity'
+	| 'constitution'
+	| 'intelligence'
+	| 'wisdom'
+	| 'charisma';
+
+export const AbilityOptions = Object.values(ABILITY);
 
 export type Background =
 	| 'accolyte'
@@ -212,6 +249,7 @@ export const BackgroundDetails: Record<Background, BackgroundDetails> = {
 export interface Effect {
 	id: number;
 	modifier: number;
+	attribute: Ability;
 	description: string;
 }
 

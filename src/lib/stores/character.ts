@@ -20,11 +20,25 @@ export const background: Writable<Background> = writable('accolyte');
 
 export const level: Writable<number> = writable(1);
 
+function ifHalfElf(race: string): number {
+	switch (race) {
+		case RACE.HIGH_HALF_ELF:
+			return 2;
+		case RACE.WOOD_HALF_ELF:
+			return 2;
+		case RACE.DROW_HALF_ELF:
+			return 2;
+		default:
+			return 0;
+	}
+}
+
 // total points the user can allocate
-export const abilityPoints: Readable<number> = derived([level], ([$level]) => {
+export const abilityPoints: Readable<number> = derived([level, race], ([$level, $race]) => {
 	const basePoints = 27;
 	const levelPoints = Math.floor($level / 4);
-	return basePoints + levelPoints;
+	const racePoints: number = ifHalfElf($race);
+	return basePoints + levelPoints + racePoints;
 });
 
 // max number of points the user can assign to a single ability

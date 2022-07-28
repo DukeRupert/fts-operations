@@ -8,8 +8,6 @@
 	import RacePicker from '$lib/components/RacePicker.svelte';
 	import BackgroundPicker from '$lib/components/BackgroundPicker.svelte';
 	import AbilityPicker from '$lib/components/AbilityPicker.svelte';
-
-	$: console.log(Object.values($raceAbilityModifier));
 </script>
 
 <div class="w-screen h-full">

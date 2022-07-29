@@ -19,7 +19,7 @@
 	</div>
 	<div class="flex flex-col gap-y-4 px-4 py-8">
 		<h2>Ability Points {$totalAllocatedPoints} / {$abilityPoints}</h2>
-		<div class="flex flex-col w-1/2 gap-y-6 border-opacity-50">
+		<div class="flex flex-col w-full gap-y-6 border-opacity-50">
 			{#each Object.values(AbilityOptions) as attribute}
 				<AbilityPicker {attribute} />
 			{/each}

@@ -1,13 +1,41 @@
 // human.ts
-import type { Race, Effect } from '$lib/constants';
-import { generateId } from '$lib/utils';
+import type { Race } from '$lib/constants';
 
-interface playableRace {
+interface Image {
+	src: string;
+	alt: string;
+}
+interface RacialAbility {
+	id: number;
+	title: string;
+	description: string;
+	classification: string;
+	image?: Image;
+}
+
+interface Cantrip {
+	name: string;
+	description: string;
+	image: Image;
+}
+
+interface Proficiency {
+	name: string;
+	description: string;
+}
+
+export interface playableRace {
 	name: Race;
 	speed: number;
+	size: string;
 	description: string;
+	image?: Image;
 	subraces?: string[];
-	effects?: Effect[];
+	special?: {
+		cantrips?: Cantrip[];
+		racialAbilities?: RacialAbility[];
+	};
+	proficiencies?: Proficiency[];
 }
 
 const human: playableRace = {
@@ -15,44 +43,7 @@ const human: playableRace = {
 	speed: 9,
 	description:
 		'The most common face to see in Faerun, humans are known for their tenacity, creativity, and endless capacity for growth',
-	effects: [
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'strength'
-		},
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'dexterity'
-		},
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'constitution'
-		},
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'intelligence'
-		},
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'wisdom'
-		},
-		{
-			id: generateId(1000),
-			modifier: 1,
-			description: 'Racial Bonus',
-			attribute: 'charisma'
-		}
-	]
+	size: 'medium'
 };
 
 export default human;

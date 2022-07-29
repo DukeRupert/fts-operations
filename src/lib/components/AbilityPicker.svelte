@@ -29,13 +29,15 @@
 	}
 </script>
 
-<div class="grid h-20 card card-side bg-base-300 rounded-box place-items-center">
-	<div class="flex items-center gap-x-4">
+<div class="grid h-20 card card-side bg-base-300 rounded-box">
+	<div class="flex items-center justify-between px-4 gap-x-4">
 		<h3>{attribute}</h3>
 		<p>{$abilityScores[attribute]}</p>
-		<button id={attribute} on:click={handleAdd} class="btn btn-circle text-lg"> + </button>
-		<button id={attribute} on:click={handleSubtract} class="btn btn-circle btn-outline text-lg">
-			-
-		</button>
+		<div>
+			<button id={attribute} on:click={handleAdd} class="btn btn-circle text-lg"> + </button>
+			<button id={attribute} on:click={handleSubtract} class="btn btn-circle btn-outline text-lg">
+				-
+			</button>
+		</div>
 	</div>
 </div>

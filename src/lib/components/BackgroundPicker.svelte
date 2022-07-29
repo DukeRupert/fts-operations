@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { background } from '$lib/stores/character';
-	import type { Background } from '$lib/constants';
+	import type { Background } from '$lib/types';
 	import { BackgroundOptions } from '$lib/constants';
 
 	// @ts-ignore

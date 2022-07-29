@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { race, raceAbilityModifier, abilityScores } from '$lib/stores/character';
-	import type { Effect, Race } from '$lib/constants';
+	import { race } from '$lib/stores/character';
+	import type { Race } from '$lib/types';
 	import { RaceOptions } from '$lib/constants';
 
 	// @ts-ignore

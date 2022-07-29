@@ -1,5 +1,5 @@
 // cantrips.ts
-import type { Cantrip } from '$lib/data/types';
+import type { Cantrip } from '$lib/types';
 export const Cantrips: Cantrip[] = [
 	{
 		name: 'Acid Splash',
@@ -7,7 +7,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: false,
 		description: 'Hurl a bubble of acid that deals 1d6 Acid to each creature it hits.',
-		classes: ['sorcerer', 'wizard']
+		classes: ['sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Blade Ward',
@@ -16,7 +17,8 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			'Gain resistance to Bludgeoning, Piercing and Slashing damage from weapon attacks. Inflicts Blade Ward.',
-		classes: ['bard', 'sorcerer', 'warlock', 'wizard']
+		classes: ['bard', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Chill Touch',
@@ -25,7 +27,8 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			'Assail a creature with the chill of the grave. It takes 1d8 Necrotic and cannot regain hit points. Undead creatures also get disadvantage on attack rolls.\nInflicts Chill Touch',
-		classes: ['sorcerer', 'warlock', 'wizard']
+		classes: ['sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Dancing Lights',
@@ -33,7 +36,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: true,
 		description: 'Create wisps of light that illuminate a 12m radius.',
-		classes: ['bard', 'sorcerer', 'wizard']
+		classes: ['bard', 'sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'druidcraft',
@@ -58,7 +62,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: false,
 		description: 'Hurl a mote of fire that deals 1d10 Fire and creates a flammable surface.',
-		classes: ['sorcerer', 'wizard']
+		classes: ['sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Friends',
@@ -66,7 +71,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: true,
 		description: 'Enchant a non-hostile creature to gain advantage on Charisma checks against it.',
-		classes: ['bard', 'sorcerer', 'warlock', 'wizard']
+		classes: ['bard', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Githyanki Psionics: Mage Hand',
@@ -74,7 +80,7 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: true,
 		description: 'Create an invisible spectral hand that can manipulate and interact with objects.',
-		classes: ['githyanki']
+		races: ['githyanki']
 	},
 	{
 		name: 'Guidance',
@@ -91,7 +97,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: false,
 		description: 'Infuse an object with an aura of light.',
-		classes: ['bard', 'cleric', 'sorcerer', 'wizard']
+		classes: ['bard', 'cleric', 'sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Mage Hand',
@@ -99,7 +106,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: false,
 		description: 'Create a spectral hand that can manipulate and interact with objects.',
-		classes: ['bard', 'sorcerer', 'warlock', 'wizard']
+		classes: ['bard', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Mending',
@@ -126,7 +134,8 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			'Create an illusory image that distracts nearby creatures compelling them to investigate.\nYou can remain hidden while casting this spell.',
-		classes: ['bard', 'sorcerer', 'warlock', 'wizard']
+		classes: ['bard', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Poison Spray',
@@ -134,7 +143,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: false,
 		description: 'Project a puff of noxious gas that deals 1d12 Poison.',
-		classes: ['druid', 'sorcerer', 'warlock', 'wizard']
+		classes: ['druid', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Prestidigitation',
@@ -161,7 +171,8 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			"Call forth a frigid beam of blue-white light. Deals 1d8 Cold and reduces the targe's speed by 3m\nInflicts Ray of Frost",
-		classes: ['sorcerer', 'wizard']
+		classes: ['sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Resistance',
@@ -187,7 +198,7 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			'A creature you touch regains 1d8-1 hit points but potentially falls into a slumber.',
-		classes: ["Amulet of Selûne's Chosen wearer"]
+		classes: ['AmuletOfSelûne']
 	},
 	{
 		name: 'Shillelagh',
@@ -205,7 +216,8 @@ export const Cantrips: Cantrip[] = [
 		concentration: false,
 		description:
 			'Lightning springs from your hand. It deal 1d8 Lightning and prevents the target from taking reactions.\nInflicts Shocking Grasp',
-		classes: ['sorcerer', 'wizard']
+		classes: ['sorcerer', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Spare the Dying',
@@ -239,7 +251,8 @@ export const Cantrips: Cantrip[] = [
 		castingTime: '1 Action',
 		concentration: true,
 		description: "Divine a character's defenses to give you advantage on attack rolls against it.",
-		classes: ['bard', 'sorcerer', 'warlock', 'wizard']
+		classes: ['bard', 'sorcerer', 'warlock', 'wizard'],
+		races: ['high elf']
 	},
 	{
 		name: 'Vicious Mockery',

@@ -7,7 +7,8 @@
 		maxAbilityPointAllocation,
 		abilityPointAllocation
 	} from '$lib/stores/character';
-	import { BASE_ABILITY_SCORE, type Ability } from '$lib/constants';
+	import { BASE_ABILITY_SCORE } from '$lib/constants';
+	import type { Ability } from '$lib/types';
 
 	export let attribute: Ability = 'strength';
 

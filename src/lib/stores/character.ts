@@ -1,14 +1,6 @@
 import { writable, derived, type Writable, type Readable } from 'svelte/store';
-import {
-	type PrimaryClasses,
-	type Race,
-	type Background,
-	RACE,
-	BASE_ABILITY_SCORE,
-	MAX_BASE_ABILITY_SCORE,
-	type Ability,
-	AbilityOptions
-} from '$lib/constants';
+import { RACE, BASE_ABILITY_SCORE, MAX_BASE_ABILITY_SCORE, AbilityOptions } from '$lib/constants';
+import type { PrimaryClasses, Race, Background, Ability } from '$lib/types';
 
 export const primaryClass: Writable<PrimaryClasses> = writable('fighter');
 

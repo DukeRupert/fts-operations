@@ -44,6 +44,7 @@ export interface playerClass {
 	savingThrows: Ability[];
 	armorProfs: ArmorProficiency[];
 	weaponProfs: WeaponProficiency[];
+	subClass: Record<SubClasses, any>;
 }
 
 export type PrimaryClasses =
@@ -57,6 +58,8 @@ export type PrimaryClasses =
 	| 'sorcerer'
 	| 'barbarian'
 	| 'bard';
+
+export type SubClasses = 'battle master' | 'eldritch knight';
 
 export interface SubClass {
 	title: string;

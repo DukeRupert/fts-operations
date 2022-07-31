@@ -8,7 +8,7 @@
 	import RacePicker from '$lib/components/RacePicker.svelte';
 	import BackgroundPicker from '$lib/components/BackgroundPicker.svelte';
 	import AbilityPicker from '$lib/components/AbilityPicker.svelte';
-	import Fighter from '$lib/components/class/fighter.svelte';
+	import Fighter from '$lib/components/class/fighter/Fighter.svelte';
 </script>
 
 <div class="w-screen h-full">

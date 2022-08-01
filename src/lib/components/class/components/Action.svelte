@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { Feature } from '../Fighter';
+	import type { Feature } from '$lib/types';
 
 	export let feature: Feature;
+	export let primaryClass;
 </script>
 
 <div class="card w-full bg-base-100 shadow-md">

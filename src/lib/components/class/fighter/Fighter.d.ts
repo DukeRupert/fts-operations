@@ -4,14 +4,7 @@ import type { playerClass } from '$lib/types';
 interface FighterClass extends playerClass {
 	fightingStyle: fightingStyle;
 	fightingStyleOptions: Record<FightingStyles, FightingStyle>;
-	features: Feature[];
-}
-
-export interface Feature {
-	level: number;
-	type: string;
-	name: string;
-	description: string;
+	subClass: Record<SubClasses, any>;
 }
 
 export interface FightingStyle {
@@ -26,6 +19,8 @@ export type FightingStyles =
 	| 'great weapon fighting'
 	| 'protection'
 	| 'two-weapon fighting style';
+
+export type SubClasses = 'battle master' | 'eldritch knight';
 
 // export enum FIGHTINGSTYLE {
 // 	ARCHERY = 'archery',

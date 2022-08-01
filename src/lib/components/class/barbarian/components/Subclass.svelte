@@ -1,18 +1,17 @@
 <script lang="ts">
-	import type { FightingStyles } from '../Fighter';
 	import type { Feature } from '$lib/types';
-	import { FIGHTER } from '../constants';
-	import type { SubClasses } from '../Fighter';
+	import type { SubClasses } from '../Barbarian';
 	import { subClass } from '$lib/stores/character';
+	import type { BarbarianClass } from '../Barbarian';
 
 	export let feature: Feature;
-
-	const SubClassOptions = Object.keys(FIGHTER.subClass) as SubClasses[];
+	export let primaryClass: BarbarianClass;
+	const SubClassOptions = Object.keys(primaryClass.subClass) as SubClasses[];
 	let choice: SubClasses = SubClassOptions[0];
-	let description = FIGHTER.subClass[choice].description;
+	let description = primaryClass.subClass[choice].description;
 
 	function handleChange() {
-		description = FIGHTER.subClass[choice].description;
+		description = primaryClass.subClass[choice].description;
 	}
 
 	// Update character state

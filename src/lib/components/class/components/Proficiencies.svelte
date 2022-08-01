@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { Feature } from '../Fighter';
-	import { FIGHTER } from '../constants';
+	import type { Feature, playerClass } from '$lib/types';
 
 	export let feature: Feature;
+	export let primaryClass: playerClass;
+	const { armorProfs, weaponProfs } = primaryClass;
 </script>
 
 <div class="card w-full bg-base-100 shadow-md">
@@ -12,10 +13,10 @@
 				<div class="collapse-title text-left text-xl font-medium capitalize">{feature.name}</div>
 			</div>
 			<div class="collapse-content">
-				{#each FIGHTER.weaponProfs as item}
+				{#each weaponProfs as item}
 					<p>{item} weapons</p>
 				{/each}
-				{#each FIGHTER.armorProfs as item}
+				{#each armorProfs as item}
 					<p>{item} armor</p>
 				{/each}
 			</div>

@@ -1,8 +1,10 @@
 <script lang="ts">
-	import type { Feature, FightingStyles } from '../Fighter';
+	import type { FighterClass, FightingStyles } from '../Fighter';
+	import type { Feature } from '$lib/types';
 	import { FIGHTER } from '../constants';
 
 	export let feature: Feature;
+	export let primaryClass: FighterClass;
 
 	const FightingStyles = Object.values(FIGHTER.fightingStyleOptions);
 	let choice = FightingStyles[0].name as FightingStyles;

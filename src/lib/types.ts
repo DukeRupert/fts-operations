@@ -25,6 +25,13 @@ interface Proficiency {
 	description: string;
 }
 
+export interface Feature {
+	level: number;
+	type: string;
+	name: string;
+	description: string;
+}
+
 export interface playableRace {
 	name: Race;
 	speed: number;
@@ -44,7 +51,7 @@ export interface playerClass {
 	savingThrows: Ability[];
 	armorProfs: ArmorProficiency[];
 	weaponProfs: WeaponProficiency[];
-	subClass: Record<SubClasses, any>;
+	features: Feature[];
 }
 
 export type PrimaryClasses =
@@ -58,8 +65,6 @@ export type PrimaryClasses =
 	| 'sorcerer'
 	| 'barbarian'
 	| 'bard';
-
-export type SubClasses = 'battle master' | 'eldritch knight';
 
 export interface SubClass {
 	title: string;

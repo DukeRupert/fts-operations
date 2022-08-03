@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/supabaseClient';
 
 	export let path;
 	export let size = '10em';
@@ -13,7 +13,7 @@
 
 	async function downloadImage() {
 		try {
-			const { data, error } = await supabase.storage.from('avatars').download(path);
+			const { data, error } = await supabaseClient.storage.from('avatars').download(path);
 			if (error) throw error;
 
 			src = URL.createObjectURL(data);
@@ -35,7 +35,9 @@
 			const fileName = `${Math.random()}.${fileExt}`;
 			const filePath = `${fileName}`;
 
-			let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
+			let { error: uploadError } = await supabaseClient.storage
+				.from('avatars')
+				.upload(filePath, file);
 
 			if (uploadError) throw uploadError;
 

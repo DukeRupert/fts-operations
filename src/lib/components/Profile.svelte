@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/supabaseClient';
 	import { user } from '$lib/stores/sessionStore';
+	import { session } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
 
 	let loading = true;
@@ -11,9 +12,9 @@
 	async function getProfile() {
 		try {
 			loading = true;
-			const user = supabase.auth.user();
+			const user = supabaseClient.auth.user();
 
-			let { data, error, status } = await supabase
+			let { data, error, status } = await supabaseClient
 				.from('profiles')
 				.select(`username, website, avatar_url`)
 				.eq('id', user.id)
@@ -36,7 +37,7 @@
 	async function updateProfile() {
 		try {
 			loading = true;
-			const user = supabase.auth.user();
+			const user = supabaseClient.auth.user();
 
 			const updates = {
 				id: user.id,
@@ -46,7 +47,7 @@
 				updated_at: new Date()
 			};
 
-			let { error } = await supabase.from('profiles').upsert(updates, {
+			let { error } = await supabaseClient.from('profiles').upsert(updates, {
 				returning: 'minimal' // Don't return the value after inserting
 			});
 
@@ -61,7 +62,7 @@
 	async function signOut() {
 		try {
 			loading = true;
-			let { error } = await supabase.auth.signOut();
+			let { error } = await supabaseClient.auth.signOut();
 			if (error) throw error;
 		} catch (error) {
 			alert(error.message);
@@ -75,7 +76,7 @@
 	<Avatar bind:path={avatar_url} on:upload={updateProfile} />
 	<div>
 		<label for="email">Email</label>
-		<input id="email" type="text" value={$user.email} disabled />
+		<input id="email" type="text" value={$session.user.email} disabled />
 	</div>
 	<div>
 		<label for="username">Name</label>
@@ -96,6 +97,6 @@
 	</div>
 
 	<div>
-		<button class="button block" on:click={signOut} disabled={loading}> Sign Out </button>
+		<a href="/api/auth/logout">Sign out</a>
 	</div>
 </form>

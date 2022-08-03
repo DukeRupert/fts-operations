@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
-	import { user } from '$lib/stores/sessionStore';
 	import { session } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
 

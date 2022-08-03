@@ -2,6 +2,7 @@
 	import { session } from '$app/stores';
 	import Auth from '$lib/components/Auth.svelte';
 	import Profile from '$lib/components/Profile.svelte';
+	import Dashboard from '$lib/components/Dashboard.svelte';
 
 	// user.set(supabase.auth.user());
 
@@ -14,6 +15,6 @@
 	{#if !$session.user}
 		<Auth />
 	{:else}
-		<Profile />
+		<Dashboard />
 	{/if}
 </div>

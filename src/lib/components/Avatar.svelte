@@ -1,5 +1,21 @@
 <script lang="ts">
+	import { supabaseClient } from '$lib/supabaseClient';
 	import { isAvatarMenuOpen } from '$lib/stores/app';
+
+	export let avatar_url;
+	console.log(avatar_url);
+	let src;
+
+	async function downloadImage() {
+		try {
+			const { data, error } = await supabaseClient.storage.from('avatars').download(avatar_url);
+			if (error) throw error;
+
+			src = URL.createObjectURL(data);
+		} catch (error) {
+			console.error('Error downloading image: ', error.message);
+		}
+	}
 </script>
 
 <!-- Profile dropdown -->
@@ -14,11 +30,24 @@
 			aria-haspopup="true"
 		>
 			<span class="sr-only">Open user menu</span>
-			<img
-				class="h-8 w-8 rounded-full"
-				src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-				alt=""
-			/>
+			{#if avatar_url}
+				<img class="h-8 w-8 rounded-full" use:downloadImage {src} alt="Avatar image" />
+			{:else}
+				<svg
+					class="h-8 w-8 text-gray-500"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					stroke-width="1"
+					stroke="currentColor"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" /> <circle cx="12" cy="7" r="4" />
+					<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg
+				>
+			{/if}
 		</button>
 	</div>
 
@@ -49,7 +78,7 @@
 		>
 
 		<a
-			href="#"
+			href="/api/auth/logout"
 			class="block px-4 py-2 text-sm text-gray-700"
 			role="menuitem"
 			tabindex="-1"

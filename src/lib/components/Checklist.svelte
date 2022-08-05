@@ -1,23 +1,26 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
 
-	interface Project {
+	interface StartChecklist {
 		id: number;
-		address: string;
-		city: string;
-		zip: string;
-		status: string;
+		locates: boolean;
+		locates_items: string[];
+		approved_plans: boolean;
+		signed_contract: boolean;
 	}
 
-	async function getProjects() {
+	async function getChecklists(id: number) {
 		try {
 			let { data, error, status } = await supabaseClient
-				.from('projects')
-				.select(`id, address, city, zip, status`);
+				.from('start_checklists')
+				.select(`id, locates, locates_items, approved_plans, signed_contract`)
+				.eq('project_id', id);
 
 			if (error && status !== 406) throw error;
 
-			return data as Project[];
+			console.log(data);
+
+			return data as StartChecklist[];
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -68,7 +71,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200 bg-white">
-				{#await getProjects()}
+				{#await getChecklists(1)}
 					<!-- getProjects() is pending -->
 					<p>Loading ...</p>
 				{:then projects}
@@ -78,24 +81,26 @@
 								<td
 									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6"
 								>
-									{project.address}
-									<dl class="font-normal lg:hidden">
+									{project.locates}
+									<!-- <dl class="font-normal lg:hidden">
 										<dt class="sr-only">City</dt>
 										<dd class="mt-1 truncate text-gray-700">{project.city}</dd>
 										<dt class="sr-only sm:hidden">Zip</dt>
 										<dd class="mt-1 truncate text-gray-500 sm:hidden">
 											{project.zip}
 										</dd>
-									</dl>
+									</dl> -->
 								</td>
-								<td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">{project.city}</td>
-								<td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{project.zip}</td>
+								<td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"
+									>{project.locates}</td
+								>
+								<!-- <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{project.zip}</td>
 								<td class="px-3 py-4 text-sm text-gray-500">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
 									<a href="#" class="text-actionorange-600 hover:text-actionorange-900"
 										>Edit<span class="sr-only">{project.address}</span></a
 									>
-								</td>
+								</td> -->
 							</tr>
 						{/each}
 					{/if}

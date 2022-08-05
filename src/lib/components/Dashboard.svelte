@@ -5,6 +5,7 @@
 	import MobileSidebar from './MobileSidebar.svelte';
 	import Header from './Header.svelte';
 	import Projects from './Projects.svelte';
+	import Dates from './Dates.svelte';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -51,8 +52,9 @@
 				</div>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 					<!-- Replace with your content -->
-					<div class="py-4">
+					<div class="py-4 flex flex-col gap-y-8">
 						<Projects />
+						<Dates />
 					</div>
 					<!-- /End replace -->
 				</div>

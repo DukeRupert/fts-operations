@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
+	import { activeProject } from '$lib/stores/app';
 
 	interface Project {
 		id: number;
@@ -21,6 +22,11 @@
 		} catch (error) {
 			console.log(error.message);
 		}
+	}
+
+	function handleClick(event) {
+		$activeProject = event.currentTarget.id;
+		console.log($activeProject);
 	}
 </script>
 
@@ -74,9 +80,12 @@
 				{:then projects}
 					{#if projects}
 						{#each projects as project}
-							<tr>
+							<tr on:click|preventDefault={handleClick} id={project.id.toString()}>
 								<td
-									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6"
+									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 text-gray-900 {$activeProject ==
+									project.id
+										? 'text-primary'
+										: ''}"
 								>
 									{project.address}
 									<dl class="font-normal lg:hidden">

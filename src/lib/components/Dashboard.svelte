@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
-
+	import { activeProject, activeChecklist } from '$lib/stores/app';
 	import DesktopSidebar from './DesktopSidebar.svelte';
 	import MobileSidebar from './MobileSidebar.svelte';
 	import Header from './Header.svelte';
 	import Projects from './Projects.svelte';
 	import Dates from './Dates.svelte';
+	import Checklist from './Checklist.svelte';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -32,6 +33,10 @@
 	}
 
 	getProfile();
+
+	$: currentProject = $activeProject;
+	$: checklistType = $activeChecklist.type;
+	$: checklistId = $activeChecklist.id;
 </script>
 
 <div>
@@ -54,7 +59,10 @@
 					<!-- Replace with your content -->
 					<div class="py-4 flex flex-col gap-y-8">
 						<Projects />
-						<Dates />
+						<Dates activeProject={currentProject} />
+						<!-- {#if checklistType == 'start'}
+							<Checklist id={checklistId} />
+						{/if} -->
 					</div>
 					<!-- /End replace -->
 				</div>

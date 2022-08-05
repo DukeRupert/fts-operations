@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
+	import { activeChecklist } from '$lib/stores/app';
+
+	export let activeProject: number;
 
 	interface ProjectDate {
 		id: number;
@@ -12,7 +15,8 @@
 		try {
 			let { data, error, status } = await supabaseClient
 				.from('project_days')
-				.select(`id,date, start_checklist, end_checklist`)
+				.select(`id, date, start_checklist, end_checklist`)
+				.eq('project_id', id)
 				.order('date', { ascending: false });
 
 			if (error && status !== 406) throw error;
@@ -23,6 +27,18 @@
 		} catch (error) {
 			console.log(error.message);
 		}
+	}
+
+	function selectStart(event) {
+		const type = 'start';
+		const id = event.currentTarget.id;
+		$activeChecklist = { type, id };
+	}
+
+	function selectEnd(event) {
+		const type = 'end';
+		const id = event.currentTarget.id;
+		$activeChecklist = { type, id };
 	}
 </script>
 
@@ -69,7 +85,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200 bg-white">
-				{#await getChecklists(1)}
+				{#await getChecklists(activeProject)}
 					<!-- getProjects() is pending -->
 					<p>Loading ...</p>
 				{:then dates}
@@ -90,13 +106,17 @@
 									</dl> -->
 								</td>
 								<td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell"
-									><button class="btn btn-primary btn-outline" id={date.start_checklist.toString()}
-										>View</button
+									><button
+										on:click|preventDefault={selectStart}
+										class="btn btn-primary btn-outline"
+										id={date.start_checklist.toString()}>View</button
 									></td
 								>
 								<td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"
-									><button class="btn btn-primary btn-outline" id={date.end_checklist.toString()}
-										>View</button
+									><button
+										on:click|preventDefault={selectEnd}
+										class="btn btn-primary btn-outline"
+										id={date.end_checklist.toString()}>View</button
 									></td
 								>
 								<!-- <td class="px-3 py-4 text-sm text-gray-500">{project.status}</td>

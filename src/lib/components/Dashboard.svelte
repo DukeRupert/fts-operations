@@ -12,9 +12,9 @@
 
 	async function getProfile() {
 		try {
-			const user = supabaseClient.auth.user();
+			const user = supabaseClient!.auth.user();
 
-			let { data, error, status } = await supabaseClient
+			let { data, error, status } = await supabaseClient!
 				.from('profiles')
 				.select(`username, website, avatar_url`)
 				.eq('id', user.id)
@@ -60,9 +60,9 @@
 					<div class="py-4 flex flex-col gap-y-8">
 						<Projects />
 						<Dates activeProject={currentProject} />
-						<!-- {#if checklistType == 'start'}
+						{#if checklistType == 'start'}
 							<Checklist id={checklistId} />
-						{/if} -->
+						{/if}
 					</div>
 					<!-- /End replace -->
 				</div>

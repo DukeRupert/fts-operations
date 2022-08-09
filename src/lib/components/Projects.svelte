@@ -12,7 +12,7 @@
 
 	async function getProjects() {
 		try {
-			let { data, error, status } = await supabaseClient
+			let { data, error, status } = await supabaseClient!
 				.from('projects')
 				.select(`id, address, city, zip, status`);
 
@@ -26,7 +26,6 @@
 
 	function handleClick(event) {
 		$activeProject = event.currentTarget.id;
-		console.log($activeProject);
 	}
 </script>
 
@@ -37,11 +36,7 @@
 			<p class="mt-2 text-sm text-gray-700">A list of all the projects.</p>
 		</div>
 		<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-			<button
-				type="button"
-				class="inline-flex items-center justify-center rounded-md border border-transparent bg-actionorange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-actionorange-700 focus:outline-none focus:ring-2 focus:ring-actionorange-500 focus:ring-offset-2 sm:w-auto"
-				>Add Project</button
-			>
+			<button type="button" class="btn btn-primary">Add Project</button>
 		</div>
 	</div>
 	<div
@@ -82,7 +77,7 @@
 						{#each projects as project}
 							<tr on:click|preventDefault={handleClick} id={project.id.toString()}>
 								<td
-									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 text-gray-900 {$activeProject ==
+									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 text-gray-900 cursor-pointer {$activeProject ==
 									project.id
 										? 'text-primary'
 										: ''}"
@@ -101,7 +96,7 @@
 								<td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{project.zip}</td>
 								<td class="px-3 py-4 text-sm text-gray-500">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-									<a href="#" class="text-actionorange-600 hover:text-actionorange-900"
+									<a href="#" class="text-primary"
 										>Edit<span class="sr-only">{project.address}</span></a
 									>
 								</td>

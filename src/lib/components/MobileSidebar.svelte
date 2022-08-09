@@ -2,7 +2,13 @@
 	import { isMobileMenuOpen } from '$lib/stores/app';
 </script>
 
-<div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
+<div
+	class="relative transition-all ease-in-out duration-300 {$isMobileMenuOpen
+		? 'z-40'
+		: '-z-10'} md:hidden"
+	role="dialog"
+	aria-modal="true"
+>
 	<div
 		class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300 {$isMobileMenuOpen
 			? 'opacity-100'
@@ -43,9 +49,9 @@
 
 			<div class="flex-shrink-0 flex items-center px-4">
 				<img
-					class="h-8 w-auto"
-					src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-					alt="Workflow"
+					class="h-16 w-auto bg-evergreen-500"
+					src="/icons/FtS_Logo-whiteorange-01-01.svg"
+					alt="FtS Logo"
 				/>
 			</div>
 			<div class="mt-5 flex-1 h-0 overflow-y-auto">

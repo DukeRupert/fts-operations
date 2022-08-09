@@ -7,9 +7,9 @@
 	<div class="flex flex-col flex-grow border-r border-gray-200 pt-5 bg-white overflow-y-auto">
 		<div class="flex items-center flex-shrink-0 px-4">
 			<img
-				class="h-8 w-auto"
-				src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-				alt="Workflow"
+				class="h-16 w-auto bg-evergreen-500"
+				src="/icons/FtS_Logo-whiteorange-01-01.svg"
+				alt="FtS Logo"
 			/>
 		</div>
 		<div class="mt-5 flex-grow flex flex-col">

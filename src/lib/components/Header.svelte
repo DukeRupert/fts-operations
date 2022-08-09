@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isMobileMenuOpen } from '$lib/stores/app';
 	import Avatar from '$lib/components/Avatar.svelte';
 	export let username: string;
 	export let avatar_url: string;
@@ -6,6 +7,7 @@
 
 <div class="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
 	<button
+		on:click={() => isMobileMenuOpen.update((v) => (v = !v))}
 		type="button"
 		class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
 	>

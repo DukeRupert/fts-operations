@@ -5,8 +5,8 @@
 	import MobileSidebar from './MobileSidebar.svelte';
 	import Header from './Header.svelte';
 	import Projects from './Projects.svelte';
-	import Dates from './Dates.svelte';
-	import Checklist from './Checklist.svelte';
+	import Checklists from './Checklists.svelte';
+	import StartChecklist from './Start_Checklist.svelte';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -56,15 +56,13 @@
 					<h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
 				</div>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-					<!-- Replace with your content -->
 					<div class="py-4 flex flex-col gap-y-8">
 						<Projects />
-						<Dates activeProject={currentProject} />
+						<Checklists activeProject={currentProject} />
 						{#if checklistType == 'start'}
-							<Checklist id={checklistId} />
+							<StartChecklist id={checklistId} />
 						{/if}
 					</div>
-					<!-- /End replace -->
 				</div>
 			</div>
 		</main>

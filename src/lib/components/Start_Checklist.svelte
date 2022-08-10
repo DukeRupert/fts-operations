@@ -3,7 +3,7 @@
 
 	export let id: number;
 	let loading;
-	let href;
+	let href: string;
 
 	interface StartChecklist {
 		id: number;
@@ -11,6 +11,7 @@
 		customer_contact: string;
 		approved_plans: boolean;
 		signed_contract_url: string;
+		scope_of_work: string;
 		date: string;
 		status: boolean;
 	}
@@ -22,7 +23,7 @@
 			let { data, error, status } = await supabaseClient!
 				.from('start_checklists')
 				.select(
-					`id, locates_items, customer_contact, approved_plans, signed_contract_url, date, status`
+					`id, locates_items, customer_contact, approved_plans, signed_contract_url, scope_of_work, status`
 				)
 				.eq('id', id);
 
@@ -109,6 +110,8 @@
 			loading = false;
 		}
 	}
+
+	$: console.log(checklistData);
 </script>
 
 <div class="px-4 sm:px-6 lg:px-8">
@@ -129,6 +132,7 @@
 							</div>
 
 							<div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+								<!-- Locates -->
 								<div
 									class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
 								>
@@ -170,7 +174,7 @@
 										</div>
 									</div>
 								</div>
-
+								<!-- Customer Contact -->
 								<div
 									class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
 								>
@@ -190,7 +194,7 @@
 										/>
 									</div>
 								</div>
-
+								<!-- Signed Contract -->
 								<div
 									class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5"
 								>
@@ -273,21 +277,37 @@
 										</div>
 									{/if}
 								</div>
+								<!-- Scope of Work -->
+								<div
+									class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5"
+								>
+									<label
+										for="about"
+										class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+									>
+										Scope of Work
+									</label>
+									<div class="mt-1 sm:mt-0 sm:col-span-2">
+										<textarea
+											bind:value={checklistData.scope_of_work}
+											id="scope-of-work"
+											name="scope-of-work"
+											rows="4"
+											class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+										/>
+										<!-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> -->
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 
 					<div class="pt-5">
 						<div class="flex justify-end">
-							<!-- <button
-								type="button"
-								class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-								>Cancel</button
-							> -->
 							<button
 								on:click|preventDefault={updateChecklist}
 								type="submit"
-								class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md btn-primary hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+								class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md btn-secondary hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
 								>Save</button
 							>
 						</div>

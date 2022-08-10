@@ -1,7 +1,7 @@
 import { writable, type Writable } from 'svelte/store';
 
 interface AciveChecklist {
-	type: 'start' | 'end' | '';
+	type: 'start' | 'end' | 'daily' | '';
 	id: number;
 }
 

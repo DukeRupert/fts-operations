@@ -3,39 +3,54 @@
 	import { activeChecklist } from '$lib/stores/app';
 
 	export let activeProject: number;
+	let checklistCopy: Checklist[];
+	let active: number;
 
-	interface ProjectDate {
+	interface Checklist {
 		id: number;
 		date: string;
-		start_checklist: number;
-		end_checklist: number;
+		type: 'start' | 'daily' | 'end';
+		start_checklist_id?: number;
+		end_checklist_id?: number;
+		daily_checklist_id?: number;
 	}
 
 	async function getChecklists(id: number) {
 		try {
-			let { data, error, status } = await supabaseClient
-				.from('project_days')
-				.select(`id, date, start_checklist, end_checklist`)
+			let { data, error, status } = await supabaseClient!
+				.from('checklists')
+				.select(`id, type, date, start_checklist_id, end_checklist_id, daily_checklist_id`)
 				.eq('project_id', id)
-				.order('date', { ascending: false });
+				.order('date', { ascending: true });
 
 			if (error && status !== 406) throw error;
-
-			return data as ProjectDate[];
+			checklistCopy = data ?? [];
+			return data as Checklist[];
 		} catch (error) {
 			console.log(error.message);
 		}
 	}
 
-	function selectStart(event) {
-		const type = 'start';
-		const id = event.currentTarget.id;
-		$activeChecklist = { type, id };
-	}
+	function handleClick(e: MouseEvent) {
+		active = e?.currentTarget.id;
+		let checklist = checklistCopy.find((el) => el.id == active);
+		let type = checklist?.type ?? 'start';
+		let id;
+		switch (type) {
+			case 'start':
+				id = checklist?.start_checklist_id;
+				break;
+			case 'end':
+				id = checklist?.end_checklist_id;
+				break;
+			case 'daily':
+				id = checklist?.daily_checklist_id;
+				break;
+			default:
+				id = checklist?.start_checklist_id;
+				break;
+		}
 
-	function selectEnd(event) {
-		const type = 'end';
-		const id = event.currentTarget.id;
 		$activeChecklist = { type, id };
 	}
 </script>
@@ -58,18 +73,13 @@
 				<tr>
 					<th
 						scope="col"
-						class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Date</th
+						class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Type</th
 					>
 					<th
 						scope="col"
-						class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-						>Start</th
+						class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">Date</th
 					>
-					<th
-						scope="col"
-						class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-						>End</th
-					>
+
 					<!-- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
 						>Status</th
 					> -->
@@ -82,29 +92,23 @@
 				{#await getChecklists(activeProject)}
 					<!-- getProjects() is pending -->
 					<p>Loading ...</p>
-				{:then dates}
-					{#if dates}
-						{#each dates as date}
-							<tr>
-								<td
-									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6"
-								>
-									{date.date}
+				{:then checklists}
+					{#if checklists}
+						{#each checklists as checklist}
+							<tr
+								id={checklist.id.toString()}
+								on:click={handleClick}
+								class="{checklist.id == active
+									? 'bg-primary text-white'
+									: 'text-gray-900'} hover:bg-primary hover:text-white selection:bg-primary"
+							>
+								<td class="py-4 pl-4 pr-3 text-sm font-medium">
+									{checklist.type}
 								</td>
-								<td class="px-3 py-4 text-sm text-gray-500 sm:table-cell"
-									><button
-										on:click|preventDefault={selectStart}
-										class="btn btn-link"
-										id={date.start_checklist.toString()}>Start</button
-									></td
-								>
-								<td class="px-3 py-4 text-sm text-gray-500 sm:table-cell"
-									><button
-										on:click|preventDefault={selectEnd}
-										class="btn btn-link"
-										id={date.end_checklist.toString()}>End</button
-									></td
-								>
+								<td class="py-4 pl-4 pr-3 text-sm font-medium">
+									{checklist.date}
+								</td>
+								<td />
 							</tr>
 						{/each}
 					{/if}

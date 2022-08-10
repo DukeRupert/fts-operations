@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
+	import Toggle from './Toggle.svelte';
 
 	export let id: number;
 	let loading;

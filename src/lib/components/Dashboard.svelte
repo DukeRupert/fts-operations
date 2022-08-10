@@ -7,6 +7,7 @@
 	import Projects from './Projects.svelte';
 	import Checklists from './Checklists.svelte';
 	import StartChecklist from './Start_Checklist.svelte';
+	import DailyChecklist from './Daily_Checklist.svelte';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -61,6 +62,9 @@
 						<Checklists activeProject={currentProject} />
 						{#if checklistType == 'start'}
 							<StartChecklist id={checklistId} />
+						{/if}
+						{#if checklistType == 'daily'}
+							<DailyChecklist id={checklistId} />
 						{/if}
 					</div>
 				</div>

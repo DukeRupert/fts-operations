@@ -1,5 +1,7 @@
 import { writable, type Writable } from 'svelte/store';
 
+export const user = writable(false);
+
 interface AciveChecklist {
 	type: 'start' | 'end' | 'daily' | '';
 	id: number;

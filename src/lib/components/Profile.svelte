@@ -96,6 +96,6 @@
 	</div>
 
 	<div>
-		<a href="/api/auth/logout">Sign out</a>
+		<button type="button" on:click|preventDefault={signOut}>Sign out</button>
 	</div>
 </form>

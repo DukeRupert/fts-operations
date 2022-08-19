@@ -88,7 +88,7 @@
 	$: setUpForTomorrow = checklistData?.set_up_for_tomorrow ?? false;
 </script>
 
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8 mt-6 md:mt-8 lg:mt-10">
 	<div class="flex flex-col w-full border-opacity-50">
 		{#await getChecklist(id)}
 			<!-- getProjects() is pending -->

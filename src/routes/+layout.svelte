@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { user } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
+	import Modal from '$lib/components/Modal.svelte';
 
 	$user = supabaseClient.auth.user() ?? false;
 
@@ -21,3 +22,4 @@
 </script>
 
 <slot />
+<Modal />

@@ -1,12 +1,24 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
 	import { activeProject } from '$lib/stores/app';
+	import { showModal } from '$lib/stores/app';
+
+	interface Customer {
+		first_name: string;
+		last_name: string;
+		business: string;
+		phone: string;
+		email: string;
+	}
 
 	interface Project {
 		id: number;
+		name: string;
+		start_date: string;
 		address: string;
 		city: string;
 		zip: string;
+		customer: Customer;
 		status: string;
 	}
 
@@ -14,10 +26,12 @@
 		try {
 			let { data, error, status } = await supabaseClient!
 				.from('projects')
-				.select(`id, address, city, zip, status`);
+				.select(
+					`id, name, start_date, address, city, zip, status, customer:customer_id (first_name, last_name, business, phone, email)`
+				);
 
 			if (error && status !== 406) throw error;
-
+			console.log(data);
 			return data as Project[];
 		} catch (error) {
 			console.log(error.message);
@@ -29,14 +43,18 @@
 	}
 </script>
 
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8 mt-6 md:mt-8 lg:mt-10">
 	<div class="sm:flex sm:items-center">
 		<div class="sm:flex-auto">
 			<h1 class="text-xl font-semibold text-gray-900">Projects</h1>
 			<p class="mt-2 text-sm text-gray-700">A list of all the projects.</p>
 		</div>
 		<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-			<button type="button" class="btn btn-primary">Add Project</button>
+			<button
+				on:click|preventDefault={() => ($showModal = true)}
+				type="button"
+				class="btn btn-primary">Add Project</button
+			>
 		</div>
 	</div>
 	<div
@@ -47,18 +65,17 @@
 				<tr>
 					<th
 						scope="col"
-						class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-						>Address</th
+						class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th
 					>
 					<th
 						scope="col"
 						class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-						>City</th
+						>Customer</th
 					>
 					<th
 						scope="col"
 						class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-						>Zip</th
+						>Start Date</th
 					>
 					<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
 						>Status</th
@@ -75,26 +92,31 @@
 				{:then projects}
 					{#if projects}
 						{#each projects as project}
-							<tr on:click|preventDefault={handleClick} id={project.id.toString()}>
+							<tr
+								on:click|preventDefault={handleClick}
+								id={project.id.toString()}
+								class={$activeProject == project.id ? 'text-white bg-primary' : 'text-gray-900'}
+							>
 								<td
-									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 text-gray-900 cursor-pointer {$activeProject ==
-									project.id
-										? 'text-primary'
-										: ''}"
+									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 cursor-pointer"
 								>
-									{project.address}
+									{project.name}
 									<dl class="font-normal lg:hidden">
-										<dt class="sr-only">City</dt>
-										<dd class="mt-1 truncate text-gray-700">{project.city}</dd>
-										<dt class="sr-only sm:hidden">Zip</dt>
-										<dd class="mt-1 truncate text-gray-500 sm:hidden">
-											{project.zip}
+										<dt class="sr-only">Customer</dt>
+										<dd class="mt-1 truncate ">
+											{project.customer.first_name + ' ' + project.customer.last_name}
+										</dd>
+										<dt class="sr-only sm:hidden">Start Date</dt>
+										<dd class="mt-1 truncate sm:hidden">
+											{project.start_date}
 										</dd>
 									</dl>
 								</td>
-								<td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">{project.city}</td>
-								<td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{project.zip}</td>
-								<td class="px-3 py-4 text-sm text-gray-500">{project.status}</td>
+								<td class="hidden px-3 py-4 text-sm lg:table-cell"
+									>{project.customer.first_name + ' ' + project.customer.last_name}</td
+								>
+								<td class="hidden px-3 py-4 text-sm  sm:table-cell">{project.start_date}</td>
+								<td class="px-3 py-4 text-sm ">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
 									<a href="#" class="text-primary"
 										>Edit<span class="sr-only">{project.address}</span></a

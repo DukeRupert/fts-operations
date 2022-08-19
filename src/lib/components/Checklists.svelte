@@ -55,7 +55,7 @@
 	}
 </script>
 
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8 mt-6 md:mt-8 lg:mt-10">
 	<div class="sm:flex sm:items-center">
 		<div class="sm:flex-auto">
 			<h1 class="text-xl font-semibold text-gray-900">Checklists</h1>

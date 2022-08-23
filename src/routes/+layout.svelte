@@ -7,7 +7,6 @@
 	$user = supabaseClient.auth.user() ?? false;
 
 	supabaseClient.auth.onAuthStateChange((event, session) => {
-		console.log(event, session);
 		switch (event) {
 			case 'SIGNED_IN':
 				$user = session?.user;

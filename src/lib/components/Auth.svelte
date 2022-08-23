@@ -8,10 +8,10 @@
 	let signUp = false;
 </script>
 
-<div class="h-screen w-screen bg-cream-500 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="h-screen w-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 	<div class="sm:mx-auto sm:w-full sm:max-w-md">
 		<img
-			class="mx-auto h-24 w-auto bg-evergreen-500"
+			class="mx-auto h-24 w-auto bg-evergreen-500 rounded-md"
 			src="/icons/FtS_Logo-whiteorange-01-01.svg"
 			alt="Workflow"
 		/>

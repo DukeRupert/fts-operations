@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
 	import { activeProject } from '$lib/stores/app';
-	import { showModal } from '$lib/stores/app';
+	import { showModal, refreshProjects } from '$lib/stores/app';
 
 	interface Customer {
 		first_name: string;
@@ -22,6 +22,8 @@
 		status: string;
 	}
 
+	let projects: Project[];
+
 	async function getProjects() {
 		try {
 			let { data, error, status } = await supabaseClient!
@@ -32,10 +34,16 @@
 
 			if (error && status !== 406) throw error;
 			console.log(data);
-			return data as Project[];
+			projects = data as Project[];
+			return;
 		} catch (error) {
 			console.log(error.message);
 		}
+	}
+
+	$: if ($refreshProjects) {
+		$refreshProjects = false;
+		getProjects();
 	}
 
 	function handleClick(event) {
@@ -89,7 +97,7 @@
 				{#await getProjects()}
 					<!-- getProjects() is pending -->
 					<p>Loading ...</p>
-				{:then projects}
+				{:then}
 					{#if projects}
 						{#each projects as project}
 							<tr

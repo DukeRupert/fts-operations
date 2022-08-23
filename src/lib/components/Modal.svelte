@@ -5,6 +5,8 @@
 	import CreateProject from './forms/CreateProject/index.svelte';
 
 	const duration = 500;
+
+	function noop() {}
 </script>
 
 {#if $showModal}
@@ -23,7 +25,7 @@
 					}}
 					class="fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16"
 				>
-					<div on:click|stopPropagation={() => console.log('clicked')} class="w-screen max-w-2xl">
+					<div on:click|stopPropagation={noop} class="w-screen max-w-2xl">
 						<CreateProject />
 					</div>
 				</div>

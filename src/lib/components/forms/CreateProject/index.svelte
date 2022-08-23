@@ -2,6 +2,7 @@
 	import { showModal, refreshProjects } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
 	import type { CustomerRecord } from '$lib/supaTypes';
+	import CreateCustomer from './CreateCustomer.svelte';
 
 	let loading = false;
 	let date: string;
@@ -24,8 +25,6 @@
 			loading = true;
 
 			let { data, error } = await supabaseClient.from('customers').select();
-			console.log(data);
-			console.log(error);
 			customers = data as CustomerRecord[];
 			return;
 		} catch (error) {
@@ -33,6 +32,13 @@
 		} finally {
 			loading = false;
 		}
+	}
+
+	function handleActiveCustomer(event) {
+		customers.push(event.detail.customer);
+		customers = customers;
+		selectedCustomerId = event.detail.customer.id;
+		newCustomer = false;
 	}
 
 	async function handleSubmit() {
@@ -49,6 +55,7 @@
 				state,
 				zip,
 				start_date: newDate,
+				customer_id: selectedCustomerId,
 				'representative-first': representativeFirst,
 				'representative-last': representativeLast,
 				'representative-phone': representativePhone,
@@ -218,83 +225,24 @@
 			</div>
 
 			<!-- Customer Info -->
-			<div class="bg-gray-50 px-4 py-6 sm:px-6">
-				<h3 class="text-lg leading-6 font-medium text-gray-900">Customer</h3>
-				<p class="mt-1 text-sm text-gray-500">Who is this job for?</p>
+			<div class="flex justify-between bg-gray-50 px-4 py-6 sm:px-6">
+				<div>
+					<h3 class="text-lg leading-6 font-medium text-gray-900">Customer</h3>
+					<p class="mt-1 text-sm text-gray-500">Who is this job for?</p>
+				</div>
+				<button
+					on:click|preventDefault={() => (newCustomer = true)}
+					type="button"
+					class="inline-flex justify-center items-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					>Add Customer</button
+				>
 			</div>
 
 			{#if newCustomer}
-				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-					<label
-						for="representative-first"
-						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-					>
-						First name
-					</label>
-					<div class="mt-1 sm:mt-0 sm:col-span-2">
-						<input
-							bind:value={representativeFirst}
-							type="text"
-							name="representative-first"
-							id="representative-first"
-							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-						/>
-					</div>
-				</div>
-
-				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-					<label
-						for="representative-last"
-						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-					>
-						Last name
-					</label>
-					<div class="mt-1 sm:mt-0 sm:col-span-2">
-						<input
-							bind:value={representativeLast}
-							type="text"
-							name="representative-last"
-							id="representative-last"
-							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-						/>
-					</div>
-				</div>
-
-				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-					<label
-						for="represntative-phone"
-						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-					>
-						Phone
-					</label>
-					<div class="mt-1 sm:mt-0 sm:col-span-2">
-						<input
-							bind:value={representativePhone}
-							type="text"
-							name="represntative-phone"
-							id="represntative-phone"
-							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-						/>
-					</div>
-				</div>
-
-				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-					<label
-						for="represntative-email"
-						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-					>
-						Email
-					</label>
-					<div class="mt-1 sm:mt-0 sm:col-span-2">
-						<input
-							bind:value={representativeEmail}
-							type="text"
-							name="represntative-email"
-							id="represntative-email"
-							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-						/>
-					</div>
-				</div>
+				<CreateCustomer
+					on:cancel={() => (newCustomer = false)}
+					on:activeCustomer={handleActiveCustomer}
+				/>
 			{:else}
 				{#await getCustomers()}
 					<p>Loading...</p>
@@ -412,7 +360,7 @@
 					<button
 						on:click|preventDefault={handleSubmit}
 						type="submit"
-						class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+						class="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>Create</button
 					>
 				</div>

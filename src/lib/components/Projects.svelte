@@ -126,9 +126,7 @@
 								<td class="hidden px-3 py-4 text-sm  sm:table-cell">{project.start_date}</td>
 								<td class="px-3 py-4 text-sm ">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-									<a href="#" class="text-primary"
-										>Edit<span class="sr-only">{project.address}</span></a
-									>
+									<a href="#">Edit<span class="sr-only">{project.address}</span></a>
 								</td>
 							</tr>
 						{/each}

@@ -2,7 +2,7 @@
 	import { fly, fade } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
 	import { showModal } from '$lib/stores/app';
-	import CreateProject from './forms/CreateProject.svelte';
+	import CreateProject from './forms/CreateProject/index.svelte';
 
 	const duration = 500;
 </script>
@@ -14,15 +14,16 @@
 		<div class="fixed inset-0 overflow-hidden">
 			<div class="absolute inset-0 overflow-hidden">
 				<div
+					on:click={() => ($showModal = false)}
 					transition:fly={{
 						duration: duration,
 						x: 800,
 						opacity: 0.5,
 						easing: quintInOut
 					}}
-					class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16"
+					class="fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16"
 				>
-					<div class="pointer-events-auto w-screen max-w-2xl">
+					<div on:click|stopPropagation={() => console.log('clicked')} class="w-screen max-w-2xl">
 						<CreateProject />
 					</div>
 				</div>

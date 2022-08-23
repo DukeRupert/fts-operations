@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { showModal, refreshProjects } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
+	import type { CustomerRecord } from '$lib/supaTypes';
 
 	let loading = false;
 	let date: string;
@@ -13,13 +14,30 @@
 	let representativeLast: string;
 	let representativePhone: string;
 	let representativeEmail: string;
+	let newCustomer = false;
+	let customers: CustomerRecord[];
+	let selectedCustomerId: number;
+	$: console.log(selectedCustomerId);
 
-	$: console.log(loading);
+	async function getCustomers() {
+		try {
+			loading = true;
+
+			let { data, error } = await supabaseClient.from('customers').select();
+			console.log(data);
+			console.log(error);
+			customers = data as CustomerRecord[];
+			return;
+		} catch (error) {
+			alert(error.message);
+		} finally {
+			loading = false;
+		}
+	}
 
 	async function handleSubmit() {
 		try {
 			loading = true;
-			const user = supabaseClient.auth.user();
 
 			// convert date string into Date
 			const newDate = new Date(date);
@@ -198,6 +216,111 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Customer Info -->
+			<div class="bg-gray-50 px-4 py-6 sm:px-6">
+				<h3 class="text-lg leading-6 font-medium text-gray-900">Customer</h3>
+				<p class="mt-1 text-sm text-gray-500">Who is this job for?</p>
+			</div>
+
+			{#if newCustomer}
+				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+					<label
+						for="representative-first"
+						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+					>
+						First name
+					</label>
+					<div class="mt-1 sm:mt-0 sm:col-span-2">
+						<input
+							bind:value={representativeFirst}
+							type="text"
+							name="representative-first"
+							id="representative-first"
+							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						/>
+					</div>
+				</div>
+
+				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+					<label
+						for="representative-last"
+						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+					>
+						Last name
+					</label>
+					<div class="mt-1 sm:mt-0 sm:col-span-2">
+						<input
+							bind:value={representativeLast}
+							type="text"
+							name="representative-last"
+							id="representative-last"
+							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						/>
+					</div>
+				</div>
+
+				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+					<label
+						for="represntative-phone"
+						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+					>
+						Phone
+					</label>
+					<div class="mt-1 sm:mt-0 sm:col-span-2">
+						<input
+							bind:value={representativePhone}
+							type="text"
+							name="represntative-phone"
+							id="represntative-phone"
+							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						/>
+					</div>
+				</div>
+
+				<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+					<label
+						for="represntative-email"
+						class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+					>
+						Email
+					</label>
+					<div class="mt-1 sm:mt-0 sm:col-span-2">
+						<input
+							bind:value={representativeEmail}
+							type="text"
+							name="represntative-email"
+							id="represntative-email"
+							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						/>
+					</div>
+				</div>
+			{:else}
+				{#await getCustomers()}
+					<p>Loading...</p>
+				{:then}
+					<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+						<label
+							for="customer-select"
+							class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+						>
+							Customer
+						</label>
+						<div class="mt-1 sm:mt-0 sm:col-span-2">
+							<select bind:value={selectedCustomerId} class="select w-full max-w-xs">
+								<option disabled selected>Select an existing customer</option>
+								{#each customers as customer}
+									<option value={customer.id}
+										>{customer.first_name} {customer.last_name}, {customer.business}</option
+									>
+								{/each}
+							</select>
+						</div>
+					</div>
+				{:catch error}
+					<p class="text-warning">Error: failed to load.</p>
+				{/await}
+			{/if}
 
 			<!-- Representative Info -->
 			<div class="bg-gray-50 px-4 py-6 sm:px-6">

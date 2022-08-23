@@ -2,7 +2,7 @@
 	import { supabaseClient } from '$lib/supabaseClient';
 	import { activeChecklist } from '$lib/stores/app';
 
-	export let activeProject: number;
+	export let activeProjectId: number;
 	let checklistCopy: Checklist[];
 	let active: number;
 
@@ -89,7 +89,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200 bg-white">
-				{#await getChecklists(activeProject)}
+				{#await getChecklists(activeProjectId)}
 					<!-- getProjects() is pending -->
 					<p>Loading ...</p>
 				{:then checklists}

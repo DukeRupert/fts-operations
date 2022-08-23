@@ -1,40 +1,23 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
-	import { activeProject } from '$lib/stores/app';
+	import { activeProject, modalComponent } from '$lib/stores/app';
 	import { showModal, refreshProjects } from '$lib/stores/app';
+	import type { ProjectRecord } from '$lib/supaTypes';
 
-	interface Customer {
-		first_name: string;
-		last_name: string;
-		business: string;
-		phone: string;
-		email: string;
-	}
-
-	interface Project {
-		id: number;
-		name: string;
-		start_date: string;
-		address: string;
-		city: string;
-		zip: string;
-		customer: Customer;
-		status: string;
-	}
-
-	let projects: Project[];
+	let projects: ProjectRecord[];
+	let activeId: number;
 
 	async function getProjects() {
 		try {
 			let { data, error, status } = await supabaseClient!
 				.from('projects')
 				.select(
-					`id, name, start_date, address, city, zip, status, customer:customer_id (first_name, last_name, business, phone, email)`
+					`id, name, start_date, address, city, zip,state, status, representative-first, representative-last, representative-phone, representative-email, customer:customer_id (id, first_name, last_name, business, phone, email)`
 				);
 
 			if (error && status !== 406) throw error;
 			console.log(data);
-			projects = data as Project[];
+			projects = data as ProjectRecord[];
 			return;
 		} catch (error) {
 			console.log(error.message);
@@ -47,7 +30,21 @@
 	}
 
 	function handleClick(event) {
-		$activeProject = event.currentTarget.id;
+		const targetId = event.currentTarget?.id ?? 1;
+		$activeProject = projects.find((val) => val.id == targetId);
+		activeId = $activeProject?.id ?? 0;
+	}
+
+	function addProject() {
+		$modalComponent = 'CreateProject';
+		$showModal = true;
+	}
+
+	function editProject(event) {
+		const id = event.currentTarget?.id ?? activeId;
+		$activeProject = projects.find((val) => val.id == id);
+		$modalComponent = 'EditProject';
+		$showModal = true;
 	}
 </script>
 
@@ -58,10 +55,8 @@
 			<p class="mt-2 text-sm text-gray-700">A list of all the projects.</p>
 		</div>
 		<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-			<button
-				on:click|preventDefault={() => ($showModal = true)}
-				type="button"
-				class="btn btn-primary">Add Project</button
+			<button on:click|preventDefault={addProject} type="button" class="btn btn-primary"
+				>Add Project</button
 			>
 		</div>
 	</div>
@@ -99,11 +94,11 @@
 					<p>Loading ...</p>
 				{:then}
 					{#if projects}
-						{#each projects as project}
+						{#each projects as project, i (project.id)}
 							<tr
 								on:click|preventDefault={handleClick}
 								id={project.id.toString()}
-								class={$activeProject == project.id ? 'text-white bg-primary' : 'text-gray-900'}
+								class={project.id == activeId ? 'bg-primary text-white' : ''}
 							>
 								<td
 									class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none sm:pl-6 cursor-pointer"
@@ -126,7 +121,12 @@
 								<td class="hidden px-3 py-4 text-sm  sm:table-cell">{project.start_date}</td>
 								<td class="px-3 py-4 text-sm ">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-									<a href="#">Edit<span class="sr-only">{project.address}</span></a>
+									<button
+										id={project.id.toString()}
+										type="button"
+										on:click|preventDefault={editProject}
+										>Edit<span class="sr-only">{project.address}</span></button
+									>
 								</td>
 							</tr>
 						{/each}

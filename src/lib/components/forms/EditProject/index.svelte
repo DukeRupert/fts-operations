@@ -1,23 +1,41 @@
 <script lang="ts">
-	import { showModal, refreshProjects } from '$lib/stores/app';
+	import { showModal, refreshProjects, activeProject } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
 	import type { CustomerRecord } from '$lib/supaTypes';
 	import CreateCustomer from '../CreateCustomer.svelte';
 
+	console.log($activeProject);
+	const {
+		id,
+		address: oAddress,
+		city: oCity,
+		state: oState,
+		customer,
+		name: oName,
+		start_date: oStart_date,
+		status: oStatus,
+		zip: oZip,
+		'representative-first': oRepresentativeFirst,
+		'representative-last': oRepresentativeLast,
+		'representative-phone': oRepresentativePhone,
+		'representative-email': oRepresentativeEmail
+	} = $activeProject;
+	const { id: oId } = customer;
+
 	let loading = false;
-	let date: string;
-	let projectName: string;
-	let address: string;
-	let city: string;
-	let state: string;
-	let zip: string;
-	let representativeFirst: string;
-	let representativeLast: string;
-	let representativePhone: string;
-	let representativeEmail: string;
+	let date: string = oStart_date;
+	let projectName: string = oName;
+	let address: string = oAddress;
+	let city: string = oCity;
+	let state: string = oState;
+	let zip: string = oZip;
+	let representativeFirst: string = oRepresentativeFirst ?? '';
+	let representativeLast: string = oRepresentativeLast ?? '';
+	let representativePhone: string = oRepresentativePhone ?? '';
+	let representativeEmail: string = oRepresentativeEmail ?? '';
 	let newCustomer = false;
 	let customers: CustomerRecord[];
-	let selectedCustomerId: number;
+	let selectedCustomerId: number = oId;
 
 	async function getCustomers() {
 		try {
@@ -64,7 +82,28 @@
 
 			console.log(updates);
 
-			let { error } = await supabaseClient.from('projects').insert(updates);
+			let { error } = await supabaseClient
+				.from('projects')
+				.update(updates, {
+					returning: 'minimal' // Don't return the value after inserting
+				})
+				.match({ id });
+
+			if (error) throw error;
+		} catch (error) {
+			alert(error.message);
+		} finally {
+			$refreshProjects = true;
+			$showModal = false;
+			loading = false;
+		}
+	}
+
+	async function handleDelete() {
+		try {
+			loading = true;
+
+			let { error } = await supabaseClient.from('projects').delete().match({ id });
 
 			if (error) throw error;
 		} catch (error) {
@@ -83,10 +122,8 @@
 		<div class="bg-gray-50 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
-					<h2 class="text-lg font-medium text-gray-900" id="slide-over-title">New project</h2>
-					<p class="text-sm text-gray-500">
-						Get started by filling in the information below to create your new project.
-					</p>
+					<h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Edit project</h2>
+					<p class="text-sm text-gray-500">Edit the information below to update your project.</p>
 				</div>
 				<div class="flex h-7 items-center">
 					<button
@@ -352,16 +389,16 @@
 			<div class="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
 				<div class="flex justify-end space-x-3">
 					<button
-						on:click|preventDefault={() => ($showModal = false)}
+						on:click|preventDefault={handleDelete}
 						type="button"
-						class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-						>Cancel</button
+						class="rounded-md border border-gray-300 bg-warning py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+						>Delete</button
 					>
 					<button
 						on:click|preventDefault={handleSubmit}
 						type="submit"
 						class="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-						>Create</button
+						>Update</button
 					>
 				</div>
 			</div>

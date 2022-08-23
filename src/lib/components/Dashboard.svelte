@@ -35,9 +35,9 @@
 
 	getProfile();
 
-	$: currentProject = $activeProject;
-	$: checklistType = $activeChecklist.type;
-	$: checklistId = $activeChecklist.id;
+	$: ({ id: activeProjectId } = $activeProject);
+	$: ({ type: checklistType } = $activeChecklist);
+	$: ({ id: checklistId } = $activeChecklist);
 </script>
 
 <div>
@@ -59,7 +59,7 @@
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 					<div class="py-4 flex flex-col gap-y-8">
 						<Projects />
-						<Checklists activeProject={currentProject} />
+						<Checklists {activeProjectId} />
 						{#if checklistType == 'start'}
 							<StartChecklist id={checklistId} />
 						{/if}

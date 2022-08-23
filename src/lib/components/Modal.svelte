@@ -1,10 +1,18 @@
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
-	import { showModal } from '$lib/stores/app';
+	import { showModal, modalComponent } from '$lib/stores/app';
 	import CreateProject from './forms/CreateProject/index.svelte';
+	import EditProject from '$lib/components/forms/EditProject/index.svelte';
 
 	const duration = 500;
+
+	const options = [
+		{ id: 'CreateProject', component: CreateProject },
+		{ id: 'EditProject', component: EditProject }
+	];
+
+	$: component = options.find((val) => val.id == $modalComponent)?.component;
 
 	function noop() {}
 </script>
@@ -26,7 +34,7 @@
 					class="fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16"
 				>
 					<div on:click|stopPropagation={noop} class="w-screen max-w-2xl">
-						<CreateProject />
+						<svelte:component this={component} />
 					</div>
 				</div>
 			</div>

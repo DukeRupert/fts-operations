@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
 	import { activeProject, modalComponent, activeChecklist } from '$lib/stores/app';
-	import { showModal, refreshProjects } from '$lib/stores/app';
+	import { showSlideOver, refreshProjects } from '$lib/stores/app';
 	import type { ProjectRecord } from '$lib/supaTypes';
 
 	let projects: ProjectRecord[];
@@ -37,14 +37,14 @@
 
 	function addProject() {
 		$modalComponent = 'CreateProject';
-		$showModal = true;
+		$showSlideOver = true;
 	}
 
 	function editProject(event) {
 		const id = event.currentTarget?.id ?? activeId;
 		$activeProject = projects.find((val) => val.id == id);
 		$modalComponent = 'EditProject';
-		$showModal = true;
+		$showSlideOver = true;
 	}
 </script>
 

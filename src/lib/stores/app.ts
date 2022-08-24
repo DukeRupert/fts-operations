@@ -13,7 +13,7 @@ export const user = writable(false);
 // flags to track application display state
 export const isMobileMenuOpen = writable(false);
 export const isAvatarMenuOpen = writable(false);
-export const showModal = writable(false);
+export const showSlideOver = writable(false);
 export const modalComponent: Writable<ModalComponents> = writable('');
 
 // flags to track which Project/Checklist is being operated on by the user.

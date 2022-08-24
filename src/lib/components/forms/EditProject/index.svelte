@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showModal, refreshProjects, activeProject } from '$lib/stores/app';
+	import { showSlideOver, refreshProjects, activeProject } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
 	import type { CustomerRecord } from '$lib/supaTypes';
 	import CreateCustomer from '../CreateCustomer.svelte';
@@ -94,7 +94,7 @@
 			alert(error.message);
 		} finally {
 			$refreshProjects = true;
-			$showModal = false;
+			$showSlideOver = false;
 			loading = false;
 		}
 	}
@@ -110,7 +110,7 @@
 			alert(error.message);
 		} finally {
 			$refreshProjects = true;
-			$showModal = false;
+			$showSlideOver = false;
 			loading = false;
 		}
 	}
@@ -127,7 +127,7 @@
 				</div>
 				<div class="flex h-7 items-center">
 					<button
-						on:click|preventDefault={() => ($showModal = false)}
+						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
 						class="text-gray-400 hover:text-gray-500"
 					>

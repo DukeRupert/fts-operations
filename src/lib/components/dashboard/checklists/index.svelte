@@ -10,7 +10,7 @@
 		activeChecklist,
 		activeProject,
 		modalComponent,
-		showModal,
+		showSlideOver,
 		refreshChecklists
 	} from '$lib/stores/app';
 	import { fade } from 'svelte/transition';
@@ -103,7 +103,7 @@
 
 	function addChecklist() {
 		$modalComponent = 'CreateChecklist';
-		$showModal = true;
+		$showSlideOver = true;
 	}
 
 	$: if ($refreshChecklists) {

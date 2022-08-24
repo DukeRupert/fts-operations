@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { user } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
-	import Modal from '$lib/components/Modal.svelte';
+	import Modal from '$lib/components/SlideOver.svelte';
 
 	$user = supabaseClient.auth.user() ?? false;
 

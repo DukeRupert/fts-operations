@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showModal, refreshChecklists, activeProject } from '$lib/stores/app';
+	import { showSlideOver, refreshChecklists, activeProject } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
 
 	let loading = false;
@@ -36,7 +36,7 @@
 			alert(error.message);
 		} finally {
 			$refreshChecklists = true;
-			$showModal = false;
+			$showSlideOver = false;
 			loading = false;
 		}
 	}
@@ -53,7 +53,7 @@
 				</div>
 				<div class="flex h-7 items-center">
 					<button
-						on:click|preventDefault={() => ($showModal = false)}
+						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
 						class="text-gray-400 hover:text-gray-500"
 					>
@@ -131,7 +131,7 @@
 			<div class="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
 				<div class="flex justify-end space-x-3">
 					<button
-						on:click|preventDefault={() => ($showModal = false)}
+						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
 						class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>Cancel</button

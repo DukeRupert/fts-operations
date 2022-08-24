@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
-	import { showModal, modalComponent } from '$lib/stores/app';
+	import { showSlideOver, modalComponent } from '$lib/stores/app';
 	import CreateProject from './forms/CreateProject/index.svelte';
 	import EditProject from '$lib/components/forms/EditProject/index.svelte';
 	import CreateChecklist from '$lib/components/forms/CreateChecklist/index.svelte';
@@ -19,14 +19,14 @@
 	function noop() {}
 </script>
 
-{#if $showModal}
+{#if $showSlideOver}
 	<div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
 		<div transition:fade={{ duration: duration }} class="fixed inset-0 opacity-70 bg-gray-700" />
 
 		<div class="fixed inset-0 overflow-hidden">
 			<div class="absolute inset-0 overflow-hidden">
 				<div
-					on:click={() => ($showModal = false)}
+					on:click={() => ($showSlideOver = false)}
 					transition:fly={{
 						duration: duration,
 						x: 800,

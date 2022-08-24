@@ -4,12 +4,14 @@
 	import { showModal, modalComponent } from '$lib/stores/app';
 	import CreateProject from './forms/CreateProject/index.svelte';
 	import EditProject from '$lib/components/forms/EditProject/index.svelte';
+	import CreateChecklist from '$lib/components/forms/CreateChecklist/index.svelte';
 
 	const duration = 500;
 
 	const options = [
 		{ id: 'CreateProject', component: CreateProject },
-		{ id: 'EditProject', component: EditProject }
+		{ id: 'EditProject', component: EditProject },
+		{ id: 'CreateChecklist', component: CreateChecklist }
 	];
 
 	$: component = options.find((val) => val.id == $modalComponent)?.component;

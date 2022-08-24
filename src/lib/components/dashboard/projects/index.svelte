@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
-	import { activeProject, modalComponent } from '$lib/stores/app';
+	import { activeProject, modalComponent, activeChecklist } from '$lib/stores/app';
 	import { showModal, refreshProjects } from '$lib/stores/app';
 	import type { ProjectRecord } from '$lib/supaTypes';
 
@@ -16,7 +16,6 @@
 				);
 
 			if (error && status !== 406) throw error;
-			console.log(data);
 			projects = data as ProjectRecord[];
 			return;
 		} catch (error) {
@@ -32,6 +31,7 @@
 	function handleClick(event) {
 		const targetId = event.currentTarget?.id ?? 1;
 		$activeProject = projects.find((val) => val.id == targetId);
+		$activeChecklist = undefined;
 		activeId = $activeProject?.id ?? 0;
 	}
 

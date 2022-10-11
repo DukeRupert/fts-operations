@@ -3,6 +3,7 @@
 	import { user } from '$lib/stores/app';
 	import { supabaseClient } from '$lib/supabaseClient';
 	import Modal from '$lib/components/SlideOver.svelte';
+	import LoadingModal from '$lib/components/LoadingModal.svelte';
 
 	$user = supabaseClient.auth.user() ?? false;
 
@@ -20,5 +21,6 @@
 	});
 </script>
 
+<LoadingModal />
 <slot />
 <Modal />

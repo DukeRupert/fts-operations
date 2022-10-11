@@ -15,6 +15,7 @@ export const isMobileMenuOpen = writable(false);
 export const isAvatarMenuOpen = writable(false);
 export const showSlideOver = writable(false);
 export const modalComponent: Writable<ModalComponents> = writable('');
+export const isLoading = writable(false);
 
 // flags to track which Project/Checklist is being operated on by the user.
 export const activeProject: Writable<ProjectRecord | undefined> = writable(undefined);

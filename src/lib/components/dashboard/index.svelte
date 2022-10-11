@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { supabaseClient } from '$lib/supabaseClient';
-	import { activeProject, activeChecklist } from '$lib/stores/app';
+	import { activeProject, activeChecklist, isLoading } from '$lib/stores/app';
 	import DesktopSidebar from '$lib/components/DesktopSidebar.svelte';
 	import MobileSidebar from '$lib/components/MobileSidebar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Projects from '$lib/components/dashboard/projects/index.svelte';
 	import Checklists from '$lib/components/dashboard/checklists/index.svelte';
 	import Checklist from '$lib/components/dashboard/checklists/checklist/index.svelte';
+	import { prevent_default } from 'svelte/internal';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -69,6 +70,7 @@
 					</div>
 				</div>
 			</div>
+			<button on:click|preventDefault={() => ($isLoading = true)}>Toggle</button>
 		</main>
 	</div>
 </div>

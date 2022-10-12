@@ -1,31 +1,32 @@
 <script lang="ts">
-	// Todo
+	import { page } from '$app/stores';
 </script>
 
 <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
 	<!-- Sidebar component, swap this element with another sidebar if you like -->
-	<div class="flex flex-col flex-grow border-r border-gray-200 pt-5 bg-white overflow-y-auto">
+	<div
+		class="flex flex-col flex-grow border-r border-gray-200 dark:border-gray-800 pt-5 bg-white dark:bg-black overflow-y-auto"
+	>
 		<div class="flex items-center flex-shrink-0 px-4">
 			<img
-				class="h-16 w-auto bg-evergreen-500"
+				class="h-16 w-auto bg-evergreen-500 dark:bg-evergreen-900"
 				src="/icons/FtS_Logo-whiteorange-01-01.svg"
 				alt="FtS Logo"
 			/>
 		</div>
 		<div class="mt-5 flex-grow flex flex-col">
 			<nav class="flex-1 px-2 pb-4 space-y-1">
-				<!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
 				<a
-					href="#"
-					class="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+					href="/"
+					class="{$page.routeId == ''
+						? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+						: 'text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-100'} group flex items-center px-2 py-2 text-sm font-medium rounded-md"
 				>
-					<!--
-              Heroicon name: outline/home
-
-              Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
-            -->
+					<!-- Heroicon name: outline/home -->
 					<svg
-						class="text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+						class="{$page.routeId == ''
+							? 'text-gray-500 dark:text-gray-300'
+							: 'text-gray-400 group-hover:text-gray-200 dark:text-gray-300'} mr-3 flex-shrink-0 h-6 w-6"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -43,12 +44,16 @@
 				</a>
 
 				<a
-					href="#"
-					class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+					href="/team"
+					class="{$page.routeId == 'team'
+						? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+						: 'text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-100'} group flex items-center px-2 py-2 text-sm font-medium rounded-md"
 				>
 					<!-- Heroicon name: outline/users -->
 					<svg
-						class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+						class="{$page.routeId == 'team'
+							? 'text-gray-500 dark:text-gray-300'
+							: 'text-gray-400 group-hover:text-gray-200 dark:text-gray-300'} mr-3 flex-shrink-0 h-6 w-6"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -66,12 +71,16 @@
 				</a>
 
 				<a
-					href="#"
-					class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+					href="/projects"
+					class="{$page.routeId == 'projects'
+						? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+						: 'text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-100'} group flex items-center px-2 py-2 text-sm font-medium rounded-md"
 				>
 					<!-- Heroicon name: outline/folder -->
 					<svg
-						class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+						class="{$page.routeId == 'projects'
+							? 'text-gray-500 dark:text-gray-300'
+							: 'text-gray-400 group-hover:text-gray-200 dark:text-gray-300'} mr-3 flex-shrink-0 h-6 w-6"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -86,75 +95,6 @@
 						/>
 					</svg>
 					Projects
-				</a>
-
-				<a
-					href="#"
-					class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-				>
-					<!-- Heroicon name: outline/calendar -->
-					<svg
-						class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-						/>
-					</svg>
-					Calendar
-				</a>
-
-				<a
-					href="#"
-					class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-				>
-					<!-- Heroicon name: outline/inbox -->
-					<svg
-						class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-						/>
-					</svg>
-					Documents
-				</a>
-
-				<a
-					href="#"
-					class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-				>
-					<!-- Heroicon name: outline/chart-bar -->
-					<svg
-						class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-						/>
-					</svg>
-					Reports
 				</a>
 			</nav>
 		</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { isMobileMenuOpen } from '$lib/stores/app';
 </script>
 
@@ -10,14 +11,14 @@
 	aria-modal="true"
 >
 	<div
-		class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300 {$isMobileMenuOpen
+		class="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-75 transition-opacity ease-linear duration-300 {$isMobileMenuOpen
 			? 'opacity-100'
 			: 'opacity-0'}"
 	/>
 
 	<div class="fixed inset-0 flex z-40 }">
 		<div
-			class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white transition ease-in-out duration-300 transform {$isMobileMenuOpen
+			class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white dark:bg-gray-800 transition ease-in-out duration-300 transform {$isMobileMenuOpen
 				? 'translate-x-0'
 				: '-translate-x-full'}"
 		>
@@ -49,25 +50,28 @@
 
 			<div class="flex-shrink-0 flex items-center px-4">
 				<img
-					class="h-16 w-auto bg-evergreen-500"
+					class="h-16 w-auto bg-evergreen-500 dark:bg-evergreen-900"
 					src="/icons/FtS_Logo-whiteorange-01-01.svg"
 					alt="FtS Logo"
 				/>
 			</div>
 			<div class="mt-5 flex-1 h-0 overflow-y-auto">
 				<nav class="px-2 space-y-1">
-					<!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
 					<a
-						href="#"
-						class="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+						href="/"
+						class="{$page.routeId == ''
+							? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+							: 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-100'} group flex items-center px-2 py-2 text-base font-medium rounded-md"
 					>
 						<!--
                 Heroicon name: outline/home
 
-                Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
+                Current: "text-gray-500 dark:text-gray-300", Default: "text-gray-400 group-hover:text-gray-500 dark:text-gray-300"
               -->
 						<svg
-							class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+							class="{$page.routeId == ''
+								? 'text-gray-500 dark:text-gray-300'
+								: 'text-gray-400 group-hover:text-gray-500 dark:text-gray-300'} mr-4 flex-shrink-0 h-6 w-6"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -85,12 +89,16 @@
 					</a>
 
 					<a
-						href="#"
-						class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+						href="/team"
+						class="{$page.routeId == 'team'
+							? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+							: 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-100'} group flex items-center px-2 py-2 text-base font-medium rounded-md"
 					>
 						<!-- Heroicon name: outline/users -->
 						<svg
-							class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+							class="{$page.routeId == 'team'
+								? 'text-gray-500 dark:text-gray-300'
+								: 'text-gray-400 group-hover:text-gray-500 dark:text-gray-300'} mr-4 flex-shrink-0 h-6 w-6"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -108,12 +116,16 @@
 					</a>
 
 					<a
-						href="#"
-						class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+						href="/projects"
+						class="{$page.routeId == 'team'
+							? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+							: 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-100'} group flex items-center px-2 py-2 text-base font-medium rounded-md"
 					>
 						<!-- Heroicon name: outline/folder -->
 						<svg
-							class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+							class="{$page.routeId == 'team'
+								? 'text-gray-500 dark:text-gray-300'
+								: 'text-gray-400 group-hover:text-gray-500 dark:text-gray-300'} mr-4 flex-shrink-0 h-6 w-6"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -128,75 +140,6 @@
 							/>
 						</svg>
 						Projects
-					</a>
-
-					<a
-						href="#"
-						class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-					>
-						<!-- Heroicon name: outline/calendar -->
-						<svg
-							class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="2"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-							/>
-						</svg>
-						Calendar
-					</a>
-
-					<a
-						href="#"
-						class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-					>
-						<!-- Heroicon name: outline/inbox -->
-						<svg
-							class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="2"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-							/>
-						</svg>
-						Documents
-					</a>
-
-					<a
-						href="#"
-						class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-					>
-						<!-- Heroicon name: outline/chart-bar -->
-						<svg
-							class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="2"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-							/>
-						</svg>
-						Reports
 					</a>
 				</nav>
 			</div>

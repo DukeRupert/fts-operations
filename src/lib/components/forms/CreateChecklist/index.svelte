@@ -42,20 +42,24 @@
 	}
 </script>
 
-<form class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+<form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-black shadow-xl">
 	<div class="flex-1">
 		<!-- Header -->
 		<div class="bg-gray-50 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
-					<h2 class="text-lg font-medium text-gray-900" id="slide-over-title">New checklist</h2>
-					<p class="text-sm text-gray-500">What kind of checklist do you want to create?</p>
+					<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100" id="slide-over-title">
+						New checklist
+					</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-300">
+						What kind of checklist do you want to create?
+					</p>
 				</div>
 				<div class="flex h-7 items-center">
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="text-gray-400 hover:text-gray-500"
+						class="text-gray-400 hover:text-gray-500 dark:text-gray-300"
 					>
 						<span class="sr-only">Close panel</span>
 						<!-- Heroicon name: outline/x -->
@@ -79,8 +83,10 @@
 		<div class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
 			<!-- Checklist Type -->
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label class="text-base font-medium text-gray-900">Type</label>
-				<p class="text-sm leading-5 text-gray-500">Which kind of checklist is this?</p>
+				<label class="text-base font-medium text-gray-900 dark:text-gray-100">Type</label>
+				<p class="text-sm leading-5 text-gray-500 dark:text-gray-300">
+					Which kind of checklist is this?
+				</p>
 				<fieldset class="mt-4">
 					<legend class="sr-only">Checklist type</legend>
 					<div class="mt-4 space-y-8">
@@ -133,7 +139,7 @@
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+						class="rounded-md border border-gray-300 bg-white dark:bg-black py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>Cancel</button
 					>
 					<button

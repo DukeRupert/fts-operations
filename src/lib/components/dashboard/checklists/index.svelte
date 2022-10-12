@@ -16,11 +16,13 @@
 	import { fade } from 'svelte/transition';
 	import { quintIn } from 'svelte/easing';
 	import { FLY_DURATION } from '$lib/constants';
+	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
 	let loading = false;
 	$: ({ id: projectId } = $activeProject);
 	let checklists: AllChecklists;
 	let selectedId: number;
+	let selectedType: string;
 
 	async function getStartChecklists(id: number) {
 		try {
@@ -97,6 +99,8 @@
 	function handleClick(e: MouseEvent) {
 		const record = e?.currentTarget.id;
 		const [id, type] = record.split('-');
+		selectedId = id;
+		selectedType = type;
 		const result = checklists.find((el) => el.id == id && el.type == type);
 		$activeChecklist = result;
 	}
@@ -110,6 +114,8 @@
 		$refreshChecklists = false;
 		getChecklists(projectId);
 	}
+
+	$: console.log(selectedId);
 </script>
 
 <div
@@ -118,8 +124,10 @@
 >
 	<div class="sm:flex sm:items-center">
 		<div class="sm:flex-auto">
-			<h1 class="text-xl font-semibold text-gray-900">Checklists</h1>
-			<p class="mt-2 text-sm text-gray-700">All the checklists for FIXME project.</p>
+			<h1 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Checklists</h1>
+			<p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+				All the checklists for {$activeProject?.name} project.
+			</p>
 		</div>
 		<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
 			<button
@@ -132,41 +140,44 @@
 	<div
 		class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg"
 	>
-		<table class="min-w-full divide-y divide-gray-300">
-			<thead class="bg-gray-50">
-				<tr>
-					<th
-						scope="col"
-						class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Type</th
-					>
-					<th
-						scope="col"
-						class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">Date</th
-					>
+		<table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+			{#await getChecklists(projectId)}
+				<div class="w-full flex items-center">
+					<LoadingSpinner size="10" />
+				</div>
+			{:then}
+				{#if checklists}
+					<thead class="bg-gray-50 dark:bg-gray-900">
+						<tr>
+							<th
+								scope="col"
+								class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 sm:pl-6"
+								>Type</th
+							>
+							<th
+								scope="col"
+								class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 sm:table-cell"
+								>Date</th
+							>
 
-					<!-- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-						>Status</th
-					> -->
-					<th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-						<span class="sr-only">Edit</span>
-					</th>
-				</tr>
-			</thead>
-			<tbody class="divide-y divide-gray-200 bg-white">
-				{#await getChecklists(projectId)}
-					<!-- getProjects() is pending -->
-					<p>Loading ...</p>
-				{:then}
-					{#if checklists}
+							<!-- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100"> Status</th> -->
+							<th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+								<span class="sr-only">Edit</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody
+						class="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-black text-gray-800 dark:text-gray-200"
+					>
 						{#each checklists as checklist}
 							<tr
 								id={checklist.id.toString() + '-' + checklist.type}
 								on:click={handleClick}
-								class="{checklist.id == selectedId
-									? 'bg-primary text-white'
-									: 'text-gray-900'} hover:bg-primary hover:text-white selection:bg-primary"
+								class="{checklist.id == selectedId && checklist.type == selectedType
+									? 'bg-gray-200 dark:bg-gray-800 text-white dark:text-gray-100'
+									: ''} cursor-pointer"
 							>
-								<td class="py-4 pl-4 pr-3 text-sm font-medium">
+								<td class="py-4 pl-4 pr-3 text-lg capitalize font-medium">
 									{checklist.type}
 								</td>
 								<td class="py-4 pl-4 pr-3 text-sm font-medium">
@@ -175,12 +186,12 @@
 								<td />
 							</tr>
 						{/each}
-					{/if}
-				{:catch error}
-					<!-- getProjects() was rejected -->
-					<p class="text-red-500">{error}</p>
-				{/await}
-			</tbody>
+					</tbody>
+				{/if}
+			{:catch error}
+				<!-- getProjects() was rejected -->
+				<p class="text-red-500 dark:text-red-700">{error}</p>
+			{/await}
 		</table>
 	</div>
 </div>

@@ -30,7 +30,7 @@
 			<div
 				class="{$isLoading
 					? 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100'
-					: 'ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'} relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6"
+					: 'ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'} relative bg-white dark:bg-black rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6"
 			>
 				<div>
 					<div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
@@ -49,12 +49,15 @@
 					</div>
 
 					<div class="mt-3 text-center sm:mt-5">
-						<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+						<h3
+							class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100"
+							id="modal-title"
+						>
 							Payment successful
 						</h3>
 
 						<div class="mt-2">
-							<p class="text-sm text-gray-500">
+							<p class="text-sm text-gray-500 dark:text-gray-300">
 								<svg class="animate-spin text-primary h-5 w-5 mr-3" viewBox="0 0 24 24" />
 							</p>
 						</div>

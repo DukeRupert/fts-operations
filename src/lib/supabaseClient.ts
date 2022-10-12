@@ -1,6 +1,6 @@
 // src/lib/supabaseClient.ts
 import { createClient } from '@supabase/supabase-js';
-import { dev } from '$app/env';
+import { dev } from '$app/environment';
 
 let supabaseUrl;
 let supabaseAnonKey;

@@ -118,8 +118,10 @@
 				<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
 					<div>
 						<div>
-							<h3 class="text-lg leading-6 font-medium text-gray-900">Start Checklist</h3>
-							<!-- <p class="mt-1 max-w-2xl text-sm text-gray-500">
+							<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+								Start Checklist
+							</h3>
+							<!-- <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-300">
 								{checklist.date}
 							</p> -->
 						</div>
@@ -138,7 +140,7 @@
 										type="date"
 										name="date"
 										id="date"
-										class="max-w-lg block w-full shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+										class="max-w-lg block w-full shadow-sm dark:[color-scheme:dark] dark:text-gray-300 dark:bg-gray-900 focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:max-w-xs sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 									/>
 								</div>
 							</div>
@@ -162,7 +164,7 @@
 												type="text"
 												name="locates"
 												id="locates-{i}"
-												class="max-w-lg block w-full shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+												class="max-w-lg sm:max-w-xs shadow-sm dark:text-gray-300 dark:bg-gray-900 block w-full focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:text-sm border border-gray-300 dark:border-gray-700 rounded-md"
 											/>
 										</div>
 										{#if checklist.locates_items[i] === ''}
@@ -201,7 +203,7 @@
 										type="text"
 										name="customer-name"
 										id="customer-name"
-										class="max-w-lg block w-full shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+										class="max-w-lg sm:max-w-xs shadow-sm dark:text-gray-300 dark:bg-gray-900 block w-full focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:text-sm border border-gray-300 dark:border-gray-700 rounded-md"
 									/>
 								</div>
 							</div>
@@ -209,11 +211,17 @@
 							<div
 								class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5"
 							>
-								<label for="photo" class="block text-sm font-medium text-gray-700">
+								<label
+									for="photo"
+									class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+								>
 									Signed contract
 								</label>
 								{#if checklist.signed_contract_url}
-									<a use:getSignedContractUrl {href} class="flex btn btn-link max-w-lg py-2 px-3"
+									<a
+										use:getSignedContractUrl
+										{href}
+										class="flex text-gray-700 dark:text-gray-300 btn btn-link max-w-lg py-2 px-3"
 										><svg
 											class="h-5 w-5 mr-2"
 											width="24"
@@ -234,12 +242,12 @@
 								{:else}
 									<div class="mt-1 sm:mt-0 sm:col-span-2">
 										<div
-											class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+											class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-700 border-dashed rounded-md"
 										>
 											<!-- Upload Prompt -->
 											<div class="space-y-1 text-center">
 												<svg
-													class="mx-auto h-12 w-12 text-gray-400"
+													class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-400"
 													stroke="currentColor"
 													fill="none"
 													viewBox="0 0 48 48"
@@ -252,10 +260,10 @@
 														stroke-linejoin="round"
 													/>
 												</svg>
-												<div class="flex text-sm text-gray-600">
+												<div class="flex text-sm text-gray-600 dark:text-gray-400">
 													<label
 														for="file-upload"
-														class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+														class="relative cursor-pointer bg-white dark:bg-black rounded-md font-medium text-primary hover:text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
 													>
 														{#if files && files[0]}
 															<span>{files[0].name}</span>
@@ -279,7 +287,9 @@
 															/>
 															<p class="pl-1">or drag and drop</p>
 
-															<p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+															<p class="text-xs text-gray-500 dark:text-gray-300">
+																PNG, JPG, GIF up to 10MB
+															</p>
 														{/if}
 													</label>
 												</div>
@@ -301,9 +311,9 @@
 										id="scope-of-work"
 										name="scope-of-work"
 										rows="4"
-										class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+										class="max-w-lg shadow-sm dark:text-gray-300 dark:bg-gray-900 block w-full focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:text-sm border border-gray-300 dark:border-gray-700 rounded-md"
 									/>
-									<!-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> -->
+									<!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Write a few sentences about yourself.</p> -->
 								</div>
 							</div>
 						</div>

@@ -116,20 +116,24 @@
 	}
 </script>
 
-<form class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+<form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-black shadow-xl">
 	<div class="flex-1">
 		<!-- Header -->
 		<div class="bg-gray-50 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
-					<h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Edit project</h2>
-					<p class="text-sm text-gray-500">Edit the information below to update your project.</p>
+					<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100" id="slide-over-title">
+						Edit project
+					</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-300">
+						Edit the information below to update your project.
+					</p>
 				</div>
 				<div class="flex h-7 items-center">
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="text-gray-400 hover:text-gray-500"
+						class="text-gray-400 hover:text-gray-500 dark:text-gray-300"
 					>
 						<span class="sr-only">Close panel</span>
 						<!-- Heroicon name: outline/x -->
@@ -156,7 +160,7 @@
 				<div>
 					<label
 						for="project-name"
-						class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+						class="block text-sm font-medium text-gray-900 dark:text-gray-100 sm:mt-px sm:pt-2"
 					>
 						Project name
 					</label>
@@ -263,8 +267,8 @@
 			<!-- Customer Info -->
 			<div class="flex justify-between bg-gray-50 px-4 py-6 sm:px-6">
 				<div>
-					<h3 class="text-lg leading-6 font-medium text-gray-900">Customer</h3>
-					<p class="mt-1 text-sm text-gray-500">Who is this job for?</p>
+					<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Customer</h3>
+					<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Who is this job for?</p>
 				</div>
 				<button
 					on:click|preventDefault={() => (newCustomer = true)}
@@ -309,8 +313,12 @@
 
 			<!-- Representative Info -->
 			<div class="bg-gray-50 px-4 py-6 sm:px-6">
-				<h3 class="text-lg leading-6 font-medium text-gray-900">Representative</h3>
-				<p class="mt-1 text-sm text-gray-500">Contact information for customer representative.</p>
+				<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+					Representative
+				</h3>
+				<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
+					Contact information for customer representative.
+				</p>
 			</div>
 
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">

@@ -77,14 +77,16 @@
 	}
 </script>
 
-<form class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+<form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-black shadow-xl">
 	<div class="flex-1">
 		<!-- Header -->
 		<div class="bg-gray-50 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
-					<h2 class="text-lg font-medium text-gray-900" id="slide-over-title">New project</h2>
-					<p class="text-sm text-gray-500">
+					<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100" id="slide-over-title">
+						New project
+					</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-300">
 						Get started by filling in the information below to create your new project.
 					</p>
 				</div>
@@ -92,7 +94,7 @@
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="text-gray-400 hover:text-gray-500"
+						class="text-gray-400 hover:text-gray-500 dark:text-gray-300"
 					>
 						<span class="sr-only">Close panel</span>
 						<!-- Heroicon name: outline/x -->
@@ -119,7 +121,7 @@
 				<div>
 					<label
 						for="project-name"
-						class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2"
+						class="block text-sm font-medium text-gray-900 dark:text-gray-100 sm:mt-px sm:pt-2"
 					>
 						Project name
 					</label>
@@ -226,8 +228,8 @@
 			<!-- Customer Info -->
 			<div class="flex justify-between bg-gray-50 px-4 py-6 sm:px-6">
 				<div>
-					<h3 class="text-lg leading-6 font-medium text-gray-900">Customer</h3>
-					<p class="mt-1 text-sm text-gray-500">Who is this job for?</p>
+					<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Customer</h3>
+					<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Who is this job for?</p>
 				</div>
 				<button
 					on:click|preventDefault={() => (newCustomer = true)}
@@ -276,7 +278,7 @@
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+						class="rounded-md border border-gray-300 bg-white dark:bg-black py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>Cancel</button
 					>
 					<button

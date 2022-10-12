@@ -40,7 +40,7 @@
 </script>
 
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-	<div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+	<div class="bg-white dark:bg-black py-8 px-4 shadow sm:rounded-lg sm:px-10">
 		<form class="space-y-6" action="#" method="POST">
 			<div>
 				<label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
@@ -80,7 +80,7 @@
 						type="checkbox"
 						class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
 					/>
-					<label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+					<label for="remember-me" class="ml-2 block text-sm text-gray-900 dark:text-gray-100"> Remember me </label>
 				</div>
 
 				<div class="text-sm">
@@ -110,7 +110,9 @@
 					<div class="w-full border-t border-gray-300" />
 				</div>
 				<div class="relative flex justify-center text-sm">
-					<span class="px-2 bg-white text-gray-500"> Or continue with </span>
+					<span class="px-2 bg-white dark:bg-black text-gray-500 dark:text-gray-300">
+						Or continue with
+					</span>
 				</div>
 			</div>
 

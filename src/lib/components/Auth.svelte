@@ -8,14 +8,18 @@
 	let signUp = false;
 </script>
 
-<div class="h-screen w-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div
+	class="h-screen w-screen bg-white dark:bg-black flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+>
 	<div class="sm:mx-auto sm:w-full sm:max-w-md">
 		<img
 			class="mx-auto h-24 w-auto bg-evergreen-500 rounded-md"
 			src="/icons/FtS_Logo-whiteorange-01-01.svg"
 			alt="Workflow"
 		/>
-		<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+		<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+			Sign in to your account
+		</h2>
 	</div>
 
 	{#if signUp}

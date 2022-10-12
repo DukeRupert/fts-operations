@@ -7,7 +7,6 @@
 	import Projects from '$lib/components/dashboard/projects/index.svelte';
 	import Checklists from '$lib/components/dashboard/checklists/index.svelte';
 	import Checklist from '$lib/components/dashboard/checklists/checklist/index.svelte';
-	import { prevent_default } from 'svelte/internal';
 
 	let username: string, website: string, avatar_url: string;
 
@@ -36,7 +35,7 @@
 	getProfile();
 </script>
 
-<div>
+<div class="bg-white dark:bg-black">
 	<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 	<MobileSidebar />
 
@@ -50,7 +49,7 @@
 		<main class="flex-1">
 			<div class="py-6">
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-					<h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+					<h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
 				</div>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 					<div class="py-4 flex flex-col gap-y-8">
@@ -61,12 +60,6 @@
 						{#if $activeChecklist}
 							<Checklist />
 						{/if}
-						<!-- {#if checklistType == 'start'}
-							<StartChecklist id={checklistId} />
-						{/if}
-						{#if checklistType == 'daily'}
-							<DailyChecklist id={checklistId} />
-						{/if} -->
 					</div>
 				</div>
 			</div>

@@ -84,38 +84,11 @@ const config = {
 			})
 		}
 	},
-	daisyui: {
-		themes: [
-			{
-				mytheme: {
-					primary: '#244C4F',
 
-					secondary: '#D66E1C',
-
-					accent: '#F9F9DF',
-
-					neutral: '#2F3D59',
-
-					'base-100': '#FFFFFF',
-
-					info: '#263440',
-
-					success: '#36D399',
-
-					warning: '#FBBD23',
-
-					error: '#BF3415'
-				}
-			},
-			'dark',
-			'cupcake'
-		]
-	},
 	corePlugins: {
 		aspectRatio: false
 	},
 	plugins: [
-		require('daisyui'),
 		require('@tailwindcss/typography'),
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/aspect-ratio'),

@@ -121,7 +121,7 @@
 										type="date"
 										name="date"
 										id="date"
-										class="max-w-lg block w-full shadow-sm dark:[color-scheme:dark] dark:text-gray-300 dark:bg-gray-900 focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:max-w-xs sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
+										class="max-w-lg input-date"
 									/>
 								</div>
 							</div>
@@ -182,7 +182,7 @@
 										id="scope-of-work"
 										name="scope-of-work"
 										rows="4"
-										class="max-w-lg shadow-sm block w-full dark:bg-gray-900 dark:text-gray-300 focus:ring-primary focus:border-primary sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
+										class="max-w-lg input-text"
 									/>
 									<!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Write a few sentences about yourself.</p> -->
 								</div>
@@ -202,7 +202,7 @@
 										id="scope-of-work"
 										name="scope-of-work"
 										rows="4"
-										class="max-w-lg shadow-sm block w-full dark:bg-gray-900 dark:text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
+										class="max-w-lg input-text"
 									/>
 									<!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Write a few sentences about yourself.</p> -->
 								</div>
@@ -239,10 +239,7 @@
 
 				<div class="pt-5">
 					<div class="flex justify-end">
-						<button
-							on:click|preventDefault={deleteChecklist}
-							type="submit"
-							class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md btn-warning hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+						<button on:click|preventDefault={deleteChecklist} type="submit" class="ml-3 btn-warning"
 							>Delete</button
 						>
 						<button

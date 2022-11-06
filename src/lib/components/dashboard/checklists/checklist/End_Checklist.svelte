@@ -121,7 +121,7 @@
 										type="date"
 										name="date"
 										id="date"
-										class="max-w-lg block w-full shadow-sm dark:[color-scheme:dark] dark:text-gray-300 dark:bg-gray-900 focus:ring-primary-500 focus:border-primary-500 sm:max-w-xs sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
+										class="max-w-lg sm:max-w-xs input-date"
 									/>
 								</div>
 							</div>
@@ -182,7 +182,7 @@
 										id="scope-of-work"
 										name="scope-of-work"
 										rows="4"
-										class="max-w-lg shadow-sm dark:text-gray-300 dark:bg-gray-900 block w-full focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:text-sm border border-gray-300 dark:border-gray-700 rounded-md"
+										class="max-w-lg input-text"
 									/>
 									<!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Write a few sentences about yourself.</p> -->
 								</div>
@@ -202,7 +202,7 @@
 										id="scope-of-work"
 										name="scope-of-work"
 										rows="4"
-										class="max-w-lg shadow-sm dark:text-gray-300 dark:bg-gray-900 block w-full focus:ring-primary-500 dark:focus:ring-primary-700 focus:border-primary-500 dark:focus:border-primary-700 sm:text-sm border border-gray-300 dark:border-gray-700 rounded-md"
+										class="max-w-lg input-text"
 									/>
 									<!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Write a few sentences about yourself.</p> -->
 								</div>

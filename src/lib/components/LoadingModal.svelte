@@ -17,16 +17,6 @@
 
 	<div class="fixed z-10 inset-0 overflow-y-auto">
 		<div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-			<!--
-        Modal panel, show/hide based on modal state.
-
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          To: "opacity-100 translate-y-0 sm:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 sm:scale-100"
-          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-      -->
 			<div
 				class="{$isLoading
 					? 'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100'

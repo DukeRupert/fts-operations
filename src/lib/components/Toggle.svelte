@@ -16,8 +16,8 @@
 	{id}
 	type="button"
 	class="{enabled
-		? 'bg-success'
-		: 'bg-error'} dark:bg-gray-800 mt-4 sm:mt-0 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+		? 'bg-success-light dark:bg-success-dark'
+		: 'bg-error'} bg-gray-400 dark:bg-gray-800 mt-4 sm:mt-0 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
 	role="switch"
 	aria-checked={enabled ? 'true' : 'false'}
 >
@@ -50,7 +50,7 @@
 			aria-hidden="true"
 		>
 			<svg
-				class="h-3 w-3 text-indigo-600 dark:text-indigo-400"
+				class="h-3 w-3 {enabled ? 'text-green-500' : ''}"
 				fill="currentColor"
 				viewBox="0 0 12 12"
 			>

@@ -9,7 +9,7 @@ export interface CustomerRecord {
 	email: string;
 }
 export interface ProjectRecord {
-	id?: number;
+	id: number;
 	name?: string;
 	start_date?: string;
 	address?: string;
@@ -17,10 +17,6 @@ export interface ProjectRecord {
 	zip?: string;
 	state?: string;
 	status?: string;
-	'representative-first'?: string;
-	'representative-last'?: string;
-	'representative-phone'?: string;
-	'representative-email'?: string;
 	customer?: Partial<CustomerRecord>;
 }
 

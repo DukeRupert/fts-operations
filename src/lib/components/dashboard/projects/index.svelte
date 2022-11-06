@@ -13,7 +13,7 @@
 			let { data, error, status } = await supabaseClient!
 				.from('projects')
 				.select(
-					`id, name, start_date, address, city, zip,state, status, representative-first, representative-last, representative-phone, representative-email, customer:customer_id (id, first_name, last_name, business, phone, email)`
+					`id, name, start_date, address, city, zip,state, customer:customer_id (id, first_name, last_name, business, phone, email)`
 				);
 
 			if (error && status !== 406) throw error;
@@ -89,11 +89,7 @@
 								class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200 sm:table-cell"
 								>Start Date</th
 							>
-							<th
-								scope="col"
-								class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-200"
-								>Status</th
-							>
+
 							<th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
 								<span class="sr-only">Edit</span>
 							</th>
@@ -129,7 +125,6 @@
 									>{project.customer.first_name + ' ' + project.customer.last_name}</td
 								>
 								<td class="hidden px-3 py-4 text-sm sm:table-cell">{project.start_date}</td>
-								<td class="px-3 py-4 text-sm ">{project.status}</td>
 								<td class="py-4 pl-3 pr-4 text-gray-900 dark:text-gray-100 text-right sm:pr-6">
 									<button
 										id={project.id.toString()}

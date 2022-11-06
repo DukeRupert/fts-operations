@@ -18,7 +18,7 @@ export const modalComponent: Writable<ModalComponents> = writable('');
 export const isLoading = writable(false);
 
 // flags to track which Project/Checklist is being operated on by the user.
-export const activeProject: Writable<ProjectRecord | undefined> = writable(undefined);
+export const activeProject: Writable<ProjectRecord> = writable({ id: 0 });
 export const activeChecklist: Writable<
 	StartChecklistRecord | DailyChecklistRecord | EndChecklistRecord | undefined
 > = writable(undefined);

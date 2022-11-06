@@ -45,7 +45,7 @@
 <form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-black shadow-xl">
 	<div class="flex-1">
 		<!-- Header -->
-		<div class="bg-gray-50 px-4 py-6 sm:px-6">
+		<div class="bg-gray-50 dark:bg-gray-800 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
 					<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100" id="slide-over-title">

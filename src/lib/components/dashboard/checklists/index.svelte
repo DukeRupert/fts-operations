@@ -6,13 +6,7 @@
 		EndChecklistRecord
 	} from '$lib/supaTypes';
 	import { supabaseClient } from '$lib/supabaseClient';
-	import {
-		activeChecklist,
-		activeProject,
-		modalComponent,
-		showSlideOver,
-		refreshChecklists
-	} from '$lib/stores/app';
+	import { activeChecklist, activeProject, refreshChecklists } from '$lib/stores/app';
 	import { fade } from 'svelte/transition';
 	import { quintIn } from 'svelte/easing';
 	import { FLY_DURATION } from '$lib/constants';
@@ -21,7 +15,7 @@
 	let loading = false;
 	$: ({ id: projectId } = $activeProject);
 	let checklists: AllChecklists;
-	let selectedId: number;
+	let selectedId: string;
 	let selectedType: string;
 
 	async function getStartChecklists(id: number) {
@@ -33,7 +27,7 @@
 
 			if (error) throw error;
 			return data as StartChecklistRecord[];
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.message);
 		}
 	}
@@ -47,7 +41,7 @@
 
 			if (error) throw error;
 			return data as DailyChecklistRecord[];
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.message);
 		}
 	}
@@ -61,7 +55,7 @@
 
 			if (error) throw error;
 			return data as EndChecklistRecord[];
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.message);
 		}
 	}
@@ -71,15 +65,15 @@
 	}
 
 	async function getChecklists(id: number) {
-		const arr: AllChecklists = [];
+		let arr: AllChecklists = [];
 		try {
 			loading = true;
 			const starts = (await getStartChecklists(id)) ?? [];
-			arr.push(...starts);
+			arr = [...arr, ...starts];
 			const dailies = (await getDailyChecklists(id)) ?? [];
-			arr.push(...dailies);
+			arr = [...arr, ...dailies];
 			const ends = (await getEndChecklists(id)) ?? [];
-			arr.push(...ends);
+			arr = [...arr, ...ends];
 
 			arr.sort((a, b) => {
 				// descending by date
@@ -89,7 +83,7 @@
 			});
 			checklists = arr;
 			return;
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.message);
 		} finally {
 			loading = false;
@@ -97,17 +91,40 @@
 	}
 
 	function handleClick(e: MouseEvent) {
-		const record = e?.currentTarget.id;
+		const curTarget = e?.currentTarget as HTMLButtonElement;
+		const record = curTarget?.id ?? '0';
 		const [id, type] = record.split('-');
 		selectedId = id;
 		selectedType = type;
-		const result = checklists.find((el) => el.id == id && el.type == type);
+		const result = checklists.find((el) => el.id.toString() == id && el.type == type);
 		$activeChecklist = result;
+		console.log($activeChecklist);
 	}
 
-	function addChecklist() {
-		$modalComponent = 'CreateChecklist';
-		$showSlideOver = true;
+	async function createDailyChecklist() {
+		try {
+			loading = true;
+
+			const currentTime = new Date();
+			const table = 'daily_checklists';
+			const updates = {
+				project_id: $activeProject!.id,
+				date: currentTime,
+				updated_at: new Date()
+			};
+
+			let { data, error } = await supabaseClient.from(table).insert(updates).select();
+			const { id } = data![0];
+			selectedId = id;
+			selectedType = 'daily';
+			$activeChecklist = data![0];
+			if (error) throw error;
+		} catch (error: any) {
+			alert(error.message);
+		} finally {
+			$refreshChecklists = true;
+			loading = false;
+		}
 	}
 
 	$: if ($refreshChecklists) {
@@ -131,7 +148,7 @@
 		</div>
 		<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
 			<button
-				on:click|preventDefault={addChecklist}
+				on:click|preventDefault={createDailyChecklist}
 				type="button"
 				class="btn btn-primary {projectId ? '' : 'btn-disabled'}">Add Checklist</button
 			>
@@ -146,7 +163,11 @@
 					<LoadingSpinner size="10" />
 				</div>
 			{:then}
-				{#if checklists}
+				{#if loading}
+					<div class="w-full flex items-center">
+						<LoadingSpinner size="10" />
+					</div>
+				{:else if checklists}
 					<thead class="bg-gray-50 dark:bg-gray-900">
 						<tr>
 							<th
@@ -173,8 +194,8 @@
 							<tr
 								id={checklist.id.toString() + '-' + checklist.type}
 								on:click={handleClick}
-								class="{checklist.id == selectedId && checklist.type == selectedType
-									? 'bg-gray-200 dark:bg-gray-800 text-white dark:text-gray-100'
+								class="{checklist.id.toString() == selectedId && checklist.type == selectedType
+									? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
 									: ''} cursor-pointer"
 							>
 								<td class="py-4 pl-4 pr-3 text-lg capitalize font-medium">

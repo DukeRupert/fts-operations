@@ -14,11 +14,7 @@
 		name: oName,
 		start_date: oStart_date,
 		status: oStatus,
-		zip: oZip,
-		'representative-first': oRepresentativeFirst,
-		'representative-last': oRepresentativeLast,
-		'representative-phone': oRepresentativePhone,
-		'representative-email': oRepresentativeEmail
+		zip: oZip
 	} = $activeProject;
 	const { id: oId } = customer;
 
@@ -29,10 +25,6 @@
 	let city: string = oCity;
 	let state: string = oState;
 	let zip: string = oZip;
-	let representativeFirst: string = oRepresentativeFirst ?? '';
-	let representativeLast: string = oRepresentativeLast ?? '';
-	let representativePhone: string = oRepresentativePhone ?? '';
-	let representativeEmail: string = oRepresentativeEmail ?? '';
 	let newCustomer = false;
 	let customers: CustomerRecord[];
 	let selectedCustomerId: number = oId;
@@ -310,88 +302,6 @@
 					<p class="text-warning">Error: failed to load.</p>
 				{/await}
 			{/if}
-
-			<!-- Representative Info -->
-			<div class="bg-gray-50 px-4 py-6 sm:px-6">
-				<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-					Representative
-				</h3>
-				<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
-					Contact information for customer representative.
-				</p>
-			</div>
-
-			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label
-					for="representative-first"
-					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-				>
-					First name
-				</label>
-				<div class="mt-1 sm:mt-0 sm:col-span-2">
-					<input
-						bind:value={representativeFirst}
-						type="text"
-						name="representative-first"
-						id="representative-first"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-					/>
-				</div>
-			</div>
-
-			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label
-					for="representative-last"
-					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-				>
-					Last name
-				</label>
-				<div class="mt-1 sm:mt-0 sm:col-span-2">
-					<input
-						bind:value={representativeLast}
-						type="text"
-						name="representative-last"
-						id="representative-last"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-					/>
-				</div>
-			</div>
-
-			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label
-					for="represntative-phone"
-					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-				>
-					Phone
-				</label>
-				<div class="mt-1 sm:mt-0 sm:col-span-2">
-					<input
-						bind:value={representativePhone}
-						type="text"
-						name="represntative-phone"
-						id="represntative-phone"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-					/>
-				</div>
-			</div>
-
-			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label
-					for="represntative-email"
-					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-				>
-					Email
-				</label>
-				<div class="mt-1 sm:mt-0 sm:col-span-2">
-					<input
-						bind:value={representativeEmail}
-						type="text"
-						name="represntative-email"
-						id="represntative-email"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-					/>
-				</div>
-			</div>
 
 			<!-- Action buttons -->
 			<div class="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">

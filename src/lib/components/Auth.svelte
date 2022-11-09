@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import SignIn from './SignIn.svelte';
 	import SignUp from './SignUp.svelte';
 
@@ -17,9 +17,6 @@
 			src="/icons/FtS_Logo-whiteorange-01-01.svg"
 			alt="Workflow"
 		/>
-		<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-			Sign in to your account
-		</h2>
 	</div>
 
 	{#if signUp}

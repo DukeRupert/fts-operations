@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import type { StartChecklistRecord } from '$lib/supaTypes';
 	import { fade } from 'svelte/transition';
 	import { quintIn } from 'svelte/easing';

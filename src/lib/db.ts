@@ -1,5 +1,5 @@
 // src/lib/supabaseClient.ts
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/auth-helpers-sveltekit';
 import { dev } from '$app/environment';
 
 let supabaseUrl;
@@ -13,6 +13,4 @@ if (dev) {
 	supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 }
 
-const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-
-export { supabaseClient };
+export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);

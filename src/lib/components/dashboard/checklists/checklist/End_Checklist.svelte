@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import Toggle from '$lib/components/Toggle.svelte';
 	import type { DailyChecklistRecord } from '$lib/supaTypes';
 	import { fade } from 'svelte/transition';

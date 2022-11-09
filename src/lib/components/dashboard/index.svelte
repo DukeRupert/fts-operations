@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import { activeProject, activeChecklist, isLoading } from '$lib/stores/app';
 	import DesktopSidebar from '$lib/components/DesktopSidebar.svelte';
 	import MobileSidebar from '$lib/components/MobileSidebar.svelte';
@@ -7,13 +7,17 @@
 	import Projects from '$lib/components/dashboard/projects/index.svelte';
 	import Checklists from '$lib/components/dashboard/checklists/index.svelte';
 	import Checklist from '$lib/components/dashboard/checklists/checklist/index.svelte';
+	import { page } from '$app/stores';
 
+	console.log($page);
 	let username: string, website: string, avatar_url: string;
 
 	async function getProfile() {
-		try {
-			const user = supabaseClient!.auth.user();
+		const {
+			data: { user }
+		} = await supabaseClient.auth.getUser();
 
+		if (user) {
 			let { data, error, status } = await supabaseClient!
 				.from('profiles')
 				.select(`username, website, avatar_url`)
@@ -27,8 +31,8 @@
 				website = data.website;
 				avatar_url = data.avatar_url;
 			}
-		} catch (error) {
-			console.log(error.message);
+		} else {
+			console.log('Failed to fetch user');
 		}
 	}
 

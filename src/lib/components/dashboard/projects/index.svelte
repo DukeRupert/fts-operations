@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import { activeProject, modalComponent, activeChecklist } from '$lib/stores/app';
 	import { showSlideOver, refreshProjects } from '$lib/stores/app';
 	import type { ProjectRecord } from '$lib/supaTypes';
@@ -102,9 +102,7 @@
 							<tr
 								on:click|preventDefault={handleClick}
 								id={project.id.toString()}
-								class="{project.id == activeId
-									? 'bg-gray-200 dark:bg-gray-800 text-white dark:text-gray-100'
-									: ''} group"
+								class="{project.id == activeId ? 'bg-gray-200 dark:bg-gray-800' : ''} group"
 							>
 								<td
 									class="w-full max-w-0 text-black dark:text-gray-50 py-4 pl-4 pr-3 text-lg font-medium sm:w-auto sm:max-w-none sm:pl-6 cursor-pointer"
@@ -125,7 +123,9 @@
 									>{project.customer.first_name + ' ' + project.customer.last_name}</td
 								>
 								<td class="hidden px-3 py-4 text-sm sm:table-cell">{project.start_date}</td>
-								<td class="py-4 pl-3 pr-4 text-gray-900 dark:text-gray-100 text-right sm:pr-6">
+								<td
+									class="py-4 pl-3 pr-4 text-gray-900 dark:text-gray-100 hover:text-indigo-500 dark:hover:text-indigo-500 text-right sm:pr-6"
+								>
 									<button
 										id={project.id.toString()}
 										type="button"

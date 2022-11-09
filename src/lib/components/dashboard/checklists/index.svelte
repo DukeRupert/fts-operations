@@ -5,7 +5,7 @@
 		DailyChecklistRecord,
 		EndChecklistRecord
 	} from '$lib/supaTypes';
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import { activeChecklist, activeProject, refreshChecklists } from '$lib/stores/app';
 	import { fade } from 'svelte/transition';
 	import { quintIn } from 'svelte/easing';

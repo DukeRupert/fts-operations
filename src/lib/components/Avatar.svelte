@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import { isAvatarMenuOpen } from '$lib/stores/app';
 
-	export let avatar_url;
-	console.log(avatar_url);
-	let src;
+	export let avatar_url: string;
+	let src: string;
 
 	async function downloadImage() {
 		try {
@@ -13,8 +12,12 @@
 
 			src = URL.createObjectURL(data);
 		} catch (error) {
-			console.error('Error downloading image: ', error.message);
+			console.error('Error downloading image: ', error);
 		}
+	}
+
+	async function handleSignOut() {
+		const { error } = await supabaseClient.auth.signOut();
 	}
 </script>
 
@@ -31,7 +34,7 @@
 		>
 			<span class="sr-only">Open user menu</span>
 			{#if avatar_url}
-				<img class="h-8 w-8 rounded-full" use:downloadImage {src} alt="Avatar image" />
+				<img class="h-8 w-8 rounded-full" use:downloadImage {src} alt="Avatar" />
 			{:else}
 				<svg
 					class="h-8 w-8 text-gray-500 dark:text-gray-300"
@@ -52,7 +55,7 @@
 	</div>
 
 	<div
-		class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-black ring-1 ring-black ring-opacity-5 focus:outline-none transition {$isAvatarMenuOpen
+		class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-900 ring-1 ring-black dark:ring-gray-600 ring-opacity-5 focus:outline-none transition {$isAvatarMenuOpen
 			? 'opacity-100 scale-100 ease-out duration-100'
 			: 'opacity-0 scale-95 duration-75 ease-in'}"
 		role="menu"
@@ -63,7 +66,7 @@
 		<!-- Active: "bg-gray-100", Not Active: "" -->
 		<a
 			href="#"
-			class="block px-4 py-2 text-sm text-gray-700"
+			class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
 			role="menuitem"
 			tabindex="-1"
 			id="user-menu-item-0">Your Profile</a
@@ -71,15 +74,16 @@
 
 		<a
 			href="#"
-			class="block px-4 py-2 text-sm text-gray-700"
+			class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
 			role="menuitem"
 			tabindex="-1"
 			id="user-menu-item-1">Settings</a
 		>
 
 		<a
-			href="/api/auth/logout"
-			class="block px-4 py-2 text-sm text-gray-700"
+			on:click={handleSignOut}
+			on:keypress={handleSignOut}
+			class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
 			role="menuitem"
 			tabindex="-1"
 			id="user-menu-item-2">Sign out</a

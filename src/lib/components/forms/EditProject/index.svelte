@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { showSlideOver, refreshProjects, activeProject } from '$lib/stores/app';
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import type { CustomerRecord } from '$lib/supaTypes';
 	import CreateCustomer from '../CreateCustomer.svelte';
 
@@ -13,7 +13,6 @@
 		customer,
 		name: oName,
 		start_date: oStart_date,
-		status: oStatus,
 		zip: oZip
 	} = $activeProject;
 	const { id: oId } = customer;
@@ -30,20 +29,19 @@
 	let selectedCustomerId: number = oId;
 
 	async function getCustomers() {
-		try {
-			loading = true;
+		loading = true;
 
-			let { data, error } = await supabaseClient.from('customers').select();
-			customers = data as CustomerRecord[];
-			return;
-		} catch (error) {
-			alert(error.message);
-		} finally {
+		let { data, error } = await supabaseClient.from('customers').select();
+		if (error) {
 			loading = false;
+			alert(error);
+			return;
 		}
+		customers = data as CustomerRecord[];
+		loading = false;
 	}
 
-	function handleActiveCustomer(event) {
+	function handleActiveCustomer(event: CustomEvent) {
 		customers.push(event.detail.customer);
 		customers = customers;
 		selectedCustomerId = event.detail.customer.id;
@@ -51,67 +49,61 @@
 	}
 
 	async function handleSubmit() {
-		try {
-			loading = true;
+		loading = true;
 
-			// convert date string into Date
-			const newDate = new Date(date);
+		// convert date string into Date
+		const newDate = new Date(date);
 
-			const updates = {
-				name: projectName,
-				address,
-				city,
-				state,
-				zip,
-				start_date: newDate,
-				customer_id: selectedCustomerId,
-				'representative-first': representativeFirst,
-				'representative-last': representativeLast,
-				'representative-phone': representativePhone,
-				'representative-email': representativeEmail,
-				updated_at: new Date()
-			};
+		const updates = {
+			name: projectName,
+			address,
+			city,
+			state,
+			zip,
+			start_date: newDate,
+			customer_id: selectedCustomerId,
+			updated_at: new Date()
+		};
 
-			console.log(updates);
+		let { error } = await supabaseClient
+			.from('projects')
+			.update(updates, {
+				returning: 'minimal' // Don't return the value after inserting
+			})
+			.match({ id });
 
-			let { error } = await supabaseClient
-				.from('projects')
-				.update(updates, {
-					returning: 'minimal' // Don't return the value after inserting
-				})
-				.match({ id });
-
-			if (error) throw error;
-		} catch (error) {
-			alert(error.message);
-		} finally {
-			$refreshProjects = true;
-			$showSlideOver = false;
+		if (error) {
 			loading = false;
+			alert(error);
+			return;
 		}
+
+		$refreshProjects = true;
+		$showSlideOver = false;
+		loading = false;
 	}
 
 	async function handleDelete() {
-		try {
-			loading = true;
+		loading = true;
 
-			let { error } = await supabaseClient.from('projects').delete().match({ id });
+		let { error } = await supabaseClient.from('projects').delete().match({ id });
 
-			if (error) throw error;
-		} catch (error) {
-			alert(error.message);
-		} finally {
-			$refreshProjects = true;
-			$showSlideOver = false;
+		if (error) {
 			loading = false;
+			alert(error);
+			return;
 		}
+
+		$refreshProjects = true;
+		$showSlideOver = false;
+		loading = false;
 	}
 </script>
 
-<form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-black shadow-xl">
+<form class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-gray-900 shadow-xl">
 	<div class="flex-1">
 		<!-- Header -->
-		<div class="bg-gray-50 px-4 py-6 sm:px-6">
+		<div class="bg-gray-50 dark:bg-gray-800 px-4 py-6 sm:px-6">
 			<div class="flex items-start justify-between space-x-3">
 				<div class="space-y-1">
 					<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100" id="slide-over-title">
@@ -125,7 +117,7 @@
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="text-gray-400 hover:text-gray-500 dark:text-gray-300"
+						class="text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200"
 					>
 						<span class="sr-only">Close panel</span>
 						<!-- Heroicon name: outline/x -->
@@ -146,7 +138,9 @@
 		</div>
 
 		<!-- Divider container -->
-		<div class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
+		<div
+			class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-800 sm:py-0"
+		>
 			<!-- Project name -->
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
 				<div>
@@ -163,7 +157,7 @@
 						type="text"
 						name="project-name"
 						id="project-name"
-						class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+						class="block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 					/>
 				</div>
 			</div>
@@ -172,7 +166,7 @@
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
 				<label
 					for="street-address"
-					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+					class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
 				>
 					Street address
 				</label>
@@ -183,13 +177,16 @@
 						name="street-address"
 						id="street-address"
 						autocomplete="street-address"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					/>
 				</div>
 			</div>
 
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label for="city" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+				<label
+					for="city"
+					class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
+				>
 					City
 				</label>
 				<div class="mt-1 sm:mt-0 sm:col-span-2">
@@ -199,13 +196,16 @@
 						name="city"
 						id="city"
 						autocomplete="address-level2"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					/>
 				</div>
 			</div>
 
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label for="region" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+				<label
+					for="region"
+					class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
+				>
 					State
 				</label>
 				<div class="mt-1 sm:mt-0 sm:col-span-2">
@@ -215,13 +215,16 @@
 						name="region"
 						id="region"
 						autocomplete="address-level1"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					/>
 				</div>
 			</div>
 
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label for="postal-code" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+				<label
+					for="postal-code"
+					class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
+				>
 					ZIP
 				</label>
 				<div class="mt-1 sm:mt-0 sm:col-span-2">
@@ -231,33 +234,36 @@
 						name="postal-code"
 						id="postal-code"
 						autocomplete="postal-code"
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					/>
 				</div>
 			</div>
 
 			<!-- Start Date -->
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
-				<label for="start-date" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+				<label
+					for="start-date"
+					class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
+				>
 					Start Date
 				</label>
 				<div class="mt-1 sm:mt-0 sm:col-span-2">
 					<div
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					>
 						<input
 							bind:value={date}
 							type="date"
 							name="date"
 							id="date"
-							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+							class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 						/>
 					</div>
 				</div>
 			</div>
 
 			<!-- Customer Info -->
-			<div class="flex justify-between bg-gray-50 px-4 py-6 sm:px-6">
+			<div class="flex justify-between bg-gray-50 dark:bg-gray-800 px-4 py-6 sm:px-6">
 				<div>
 					<h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">Customer</h3>
 					<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Who is this job for?</p>
@@ -265,8 +271,7 @@
 				<button
 					on:click|preventDefault={() => (newCustomer = true)}
 					type="button"
-					class="inline-flex justify-center items-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-					>Add Customer</button
+					class="btn-primary">Add Customer</button
 				>
 			</div>
 
@@ -283,7 +288,7 @@
 					<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
 						<label
 							for="customer-select"
-							class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+							class="block text-sm font-medium text-gray-700 dark:text-gray-300 sm:mt-px sm:pt-2"
 						>
 							Customer
 						</label>
@@ -304,18 +309,12 @@
 			{/if}
 
 			<!-- Action buttons -->
-			<div class="flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
+			<div class="flex-shrink-0 border-t border-gray-200 dark:border-gray-800 px-4 py-5 sm:px-6">
 				<div class="flex justify-end space-x-3">
-					<button
-						on:click|preventDefault={handleDelete}
-						type="button"
-						class="rounded-md border border-gray-300 bg-warning py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					<button on:click|preventDefault={handleDelete} type="button" class="btn-warning"
 						>Delete</button
 					>
-					<button
-						on:click|preventDefault={handleSubmit}
-						type="submit"
-						class="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					<button on:click|preventDefault={handleSubmit} type="submit" class="btn-primary"
 						>Update</button
 					>
 				</div>

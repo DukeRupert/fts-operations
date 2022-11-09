@@ -1,13 +1,19 @@
 <script>
 	import Auth from '$lib/components/Auth.svelte';
 	import Dashboard from '$lib/components/dashboard/index.svelte';
-	import { user } from '$lib/stores/app';
+	import { page } from '$app/stores';
 </script>
 
-<div>
+<!-- <div>
 	{#if $user}
 		<Dashboard />
 	{:else}
 		<Auth />
 	{/if}
-</div>
+</div> -->
+
+{#if !$page.data.session}
+	<Auth />
+{:else}
+	<Dashboard />
+{/if}

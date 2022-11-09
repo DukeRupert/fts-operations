@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { showSlideOver, refreshChecklists, activeProject } from '$lib/stores/app';
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 
 	let loading = false;
 	let date: string;

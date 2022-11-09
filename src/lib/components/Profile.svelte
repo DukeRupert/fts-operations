@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import { session } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
 
@@ -11,7 +11,12 @@
 	async function getProfile() {
 		try {
 			loading = true;
-			const user = supabaseClient.auth.user();
+			// const user = supabaseClient.auth.user();
+			console.log('Getting User');
+			const {
+				data: { user }
+			} = await supabaseClient.auth.getUser();
+			console.log(user);
 
 			let { data, error, status } = await supabaseClient
 				.from('profiles')

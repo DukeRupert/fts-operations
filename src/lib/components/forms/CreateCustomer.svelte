@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import type { CustomerRecord } from '$lib/supaTypes';
 
 	const dispatch = createEventDispatcher();

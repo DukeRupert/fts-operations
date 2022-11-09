@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { showSlideOver, refreshProjects } from '$lib/stores/app';
-	import { supabaseClient } from '$lib/supabaseClient';
+	import { supabaseClient } from '$lib/db';
 	import type { CustomerRecord } from '$lib/supaTypes';
 	import CreateCustomer from '../CreateCustomer.svelte';
 
@@ -23,13 +23,13 @@
 			customers = data as CustomerRecord[];
 			return;
 		} catch (error) {
-			alert(error.message);
+			alert(error);
 		} finally {
 			loading = false;
 		}
 	}
 
-	function handleActiveCustomer(event) {
+	function handleActiveCustomer(event: CustomEvent) {
 		customers.push(event.detail.customer);
 		customers = customers;
 		selectedCustomerId = event.detail.customer.id;
@@ -60,7 +60,7 @@
 
 			if (error) throw error;
 		} catch (error) {
-			alert(error.message);
+			alert(error);
 		} finally {
 			$refreshProjects = true;
 			$showSlideOver = false;
@@ -107,7 +107,9 @@
 		</div>
 
 		<!-- Divider container -->
-		<div class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
+		<div
+			class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-800 sm:py-0"
+		>
 			<!-- Project name -->
 			<div class="space-y-1 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
 				<div>
@@ -216,7 +218,7 @@
 				</label>
 				<div class="mt-1 sm:mt-0 sm:col-span-2">
 					<div
-						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+						class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md"
 					>
 						<input
 							bind:value={date}
@@ -271,7 +273,7 @@
 						</div>
 					</div>
 				{:catch error}
-					<p class="text-warning">Error: failed to load.</p>
+					<p class="text-warning">Error: {error}.</p>
 				{/await}
 			{/if}
 
@@ -281,13 +283,9 @@
 					<button
 						on:click|preventDefault={() => ($showSlideOver = false)}
 						type="button"
-						class="rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-black py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-						>Cancel</button
+						class="btn-warning">Cancel</button
 					>
-					<button
-						on:click|preventDefault={handleSubmit}
-						type="submit"
-						class="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					<button on:click|preventDefault={handleSubmit} type="submit" class="btn-primary"
 						>Create</button
 					>
 				</div>
